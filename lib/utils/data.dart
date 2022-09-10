@@ -13,22 +13,6 @@ List categories = [
     "name" : "Cat",
     "icon" :  "assets/icons/cat.svg"
   },
-  {
-    "name" : "Parrot",
-    "icon" :  "assets/icons/parrot.svg"
-  },
-  {
-    "name" : "Rabbit",
-    "icon" :  "assets/icons/rabbit.svg"
-  },
-  {
-    "name" : "Fish",
-    "icon" :  "assets/icons/fish.svg"
-  },
-  {
-    "name" : "Turtle",
-    "icon" :  "assets/icons/turtle.svg"
-  },
 ];
 
 List pets = [

@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:pet_app/theme/color.dart';
 
 class FavoriteBox extends StatelessWidget {
-  FavoriteBox({ Key? key, this.bgColor = red, this.onTap, this.isFavorited = false,
-  this.borderColor = Colors.transparent, this.radius = 50, this.size = 20}) : super(key: key);
+  FavoriteBox(
+      {Key? key,
+      this.bgColor = red,
+      this.onTap,
+      this.isFavorited = false,
+      this.borderColor = Colors.transparent,
+      this.radius = 50,
+      this.size = 20})
+      : super(key: key);
   final Color borderColor;
   final Color? bgColor;
   final bool isFavorited;
@@ -32,10 +39,17 @@ class FavoriteBox extends StatelessWidget {
             ),
           ],
         ),
-        child: isFavorited ?
-        Icon(Icons.favorite, color: Colors.white, size: size,)
-        :
-        Icon(Icons.favorite_border, color: Colors.white, size: size,)
+        child: isFavorited
+            ? Icon(
+                Icons.favorite,
+                color: Colors.white,
+                size: size,
+              )
+            : Icon(
+                Icons.favorite_border,
+                color: Colors.white,
+                size: size,
+              ),
       ),
     );
   }

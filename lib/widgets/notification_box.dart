@@ -4,7 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet_app/theme/color.dart';
 
 class NotificationBox extends StatelessWidget {
-  NotificationBox({ Key? key, this.onTap, this.notifiedNumber = 0}) : super(key: key);
+  NotificationBox({Key? key, this.onTap, this.notifiedNumber = 0})
+      : super(key: key);
   final GestureTapCallback? onTap;
   final int notifiedNumber;
 
@@ -19,15 +20,21 @@ class NotificationBox extends StatelessWidget {
           color: appBarColor,
           border: Border.all(color: Colors.grey.withOpacity(.3)),
         ),
-        child: notifiedNumber > 0 ? Badge(
-          badgeColor: actionColor,
-          padding: EdgeInsets.all(3),
-          position: BadgePosition.topEnd(top: -3, end: -3),
-          badgeContent: Text('', style: TextStyle(color: Colors.white),),
-          child: SvgPicture.asset("assets/icons/bell.svg", width: 25, height: 25,)
-        )
-        :
-        SvgPicture.asset("assets/icons/bell.svg")
+        child: notifiedNumber > 0
+            ? Badge(
+                badgeColor: actionColor,
+                padding: EdgeInsets.all(3),
+                position: BadgePosition.topEnd(top: -3, end: -3),
+                badgeContent: Text(
+                  '',
+                  style: TextStyle(color: Colors.white),
+                ),
+                child: SvgPicture.asset(
+                  "assets/icons/bell.svg",
+                  width: 25,
+                  height: 25,
+                ))
+            : SvgPicture.asset("assets/icons/bell.svg"),
       ),
     );
   }
