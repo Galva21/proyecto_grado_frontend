@@ -1,10 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:pet_app/provider/user_provider.dart';
+import 'package:pet_app/screens/user_simulator.dart';
 import 'package:pet_app/theme/color.dart';
 import 'package:pet_app/utils/data.dart';
 import 'package:pet_app/widgets/category_item.dart';
 import 'package:pet_app/widgets/notification_box.dart';
 import 'package:pet_app/widgets/pet_item.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,6 +19,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final user_simulator = Provider.of<UserProvider>(context);
+    print("espacio: "+ user_simulator.espacioDisponible.toString());
+    print("economia: "+ user_simulator.estadoEconomico.toString());
+    print("tiempo: "+ user_simulator.tiempoDisponible.toString());
     return Scaffold(
       backgroundColor: appBgColor,
       body: CustomScrollView(
@@ -25,6 +32,7 @@ class _HomePageState extends State<HomePage> {
             pinned: true,
             snap: true,
             floating: true,
+            iconTheme: IconThemeData(color: labelColor),
             title: getAppBar(),
           ),
           SliverList(
