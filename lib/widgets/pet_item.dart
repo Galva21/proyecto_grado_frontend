@@ -3,6 +3,7 @@ import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:pet_app/theme/color.dart';
 import 'package:pet_app/widgets/favorite_box.dart';
 
+import '../model/mascota.dart';
 import 'custom_image.dart';
 
 class PetItem extends StatelessWidget {
@@ -15,7 +16,7 @@ class PetItem extends StatelessWidget {
       this.onTap,
       this.onFavoriteTap})
       : super(key: key);
-  final data;
+  final Mascota data;
   final double width;
   final double height;
   final double radius;
@@ -37,7 +38,7 @@ class PetItem extends StatelessWidget {
           children: [
             Container(
               child: CustomImage(
-                data["image"],
+                data.imagen,
                 borderRadius: BorderRadius.vertical(
                     top: Radius.circular(radius), bottom: Radius.zero),
                 isShadow: false,
@@ -74,7 +75,7 @@ class PetItem extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              data["name"],
+                              data.nombre,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -84,7 +85,7 @@ class PetItem extends StatelessWidget {
                             ),
                           ),
                           FavoriteBox(
-                            isFavorited: data["is_favorited"],
+                            isFavorited: data.is_favorite,
                             onTap: onFavoriteTap,
                           )
                         ],
@@ -93,7 +94,7 @@ class PetItem extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        data["location"],
+                        data.caracteristica,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: glassLabelColor, fontSize: 13),
@@ -106,15 +107,15 @@ class PetItem extends StatelessWidget {
                         children: [
                           getAttribute(
                             Icons.transgender,
-                            data["sex"],
+                            data.genero,
                           ),
                           getAttribute(
                             Icons.color_lens_outlined,
-                            data["color"],
+                            data.color,
                           ),
                           getAttribute(
                             Icons.query_builder,
-                            data["age"],
+                            data.edad,
                           ),
                         ],
                       ),

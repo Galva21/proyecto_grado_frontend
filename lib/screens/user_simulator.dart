@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_app/database/mlapi.dart';
 import 'package:pet_app/provider/user_provider.dart';
 import 'package:pet_app/screens/root_app.dart';
 import 'package:pet_app/theme/color.dart';
@@ -34,6 +35,7 @@ class _UserSimulatorState extends State<UserSimulator> {
   }
 
   buildBody(BuildContext context) {
+    final user_provider = Provider.of<UserProvider>(context);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 0, bottom: 10),
@@ -90,12 +92,16 @@ class _UserSimulatorState extends State<UserSimulator> {
               height: 50,
               width: 100,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RootApp(),
-                    ),
+                onPressed: () async {
+                  await MLapi().getMascotas(context).then(
+                    (mascotas) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RootApp(),
+                        ),
+                      );
+                    },
                   );
                 },
                 child: Center(

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:pet_app/model/mascota.dart';
 
 class UserProvider with ChangeNotifier {
-  int _tamaniogrande = -1;
   int _espacioDisponible = -1;
   int _estadoEconomico = -1;
   int _tiempoDisponible = -1;
+  List<Mascota> mascotaPredecible = [];
 
-  int get tamaniogrande => this._tamaniogrande;
+  List<Mascota> get getMascotaPredecible => this.mascotaPredecible;
 
-  set tamaniogrande(int value) {
-    this._tamaniogrande = value;
+  set setMascotaPredecible(List<Mascota> mascotaPredecible) {
+    this.mascotaPredecible = mascotaPredecible;
     notifyListeners();
   }
 

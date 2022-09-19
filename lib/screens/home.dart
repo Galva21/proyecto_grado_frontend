@@ -5,6 +5,7 @@ import 'package:pet_app/screens/user_simulator.dart';
 import 'package:pet_app/theme/color.dart';
 import 'package:pet_app/utils/data.dart';
 import 'package:pet_app/widgets/category_item.dart';
+import 'package:pet_app/widgets/get_pets.dart';
 import 'package:pet_app/widgets/notification_box.dart';
 import 'package:pet_app/widgets/pet_item.dart';
 import 'package:provider/provider.dart';
@@ -18,13 +19,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final user_simulator = Provider.of<UserProvider>(context);
-    print("espacio: "+ user_simulator.espacioDisponible.toString());
-    print("economia: "+ user_simulator.estadoEconomico.toString());
-    print("tiempo: "+ user_simulator.tiempoDisponible.toString());
     return Scaffold(
-      backgroundColor: appBgColor,
+      backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -115,7 +117,7 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 0, 15, 25),
               child: Text(
-                "Adopt Me",
+                "Adoptame",
                 style: TextStyle(
                   color: textColor,
                   fontWeight: FontWeight.w700,
@@ -123,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            getPets(),
+            GetPets()
           ],
         ),
       ),
@@ -150,30 +152,31 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  getPets() {
-    double width = MediaQuery.of(context).size.width * .8;
-    return CarouselSlider(
-      options: CarouselOptions(
-        height: 400,
-        enlargeCenterPage: true,
-        disableCenter: true,
-        viewportFraction: .8,
-      ),
-      items: List.generate(
-        pets.length,
-        (index) => PetItem(
-          data: pets[index],
-          width: width,
-          onTap: () {},
-          onFavoriteTap: () {
-            setState(
-              () {
-                pets[index]["is_favorited"] = !pets[index]["is_favorited"];
-              },
-            );
-          },
-        ),
-      ),
-    );
-  }
+  // getPets() {
+  //   double width = MediaQuery.of(context).size.width * .8;
+  //   final user_provider = Provider.of<UserProvider>(context, listen: false);
+  //   return CarouselSlider(
+  //     options: CarouselOptions(
+  //       height: 400,
+  //       enlargeCenterPage: true,
+  //       disableCenter: true,
+  //       viewportFraction: .8,
+  //     ),
+  //     items: List.generate(
+  //       pets.length,
+  //       (index) => PetItem(
+  //         data: pets[index],
+  //         width: width,
+  //         onTap: () {},
+  //         onFavoriteTap: () {
+  //           setState(
+  //             () {
+  //               pets[index]["is_favorited"] = !pets[index]["is_favorited"];
+  //             },
+  //           );
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
 }
