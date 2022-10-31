@@ -31,17 +31,17 @@ class MLapi {
     return r;
   }
 
-  Future getMascotas(BuildContext context) async {
-    final user_provider = Provider.of<UserProvider>(context, listen: false);
-    user_provider.mascotaPredecible.clear();
-    List<Mascota> mascotasPredecibles = [];
-    Mascota.mascotas.forEach((e) async {
-      await getPrediccion(
-        espacio: user_provider.espacioDisponible,
-        economia: user_provider.estadoEconomico,
-        tiempo: user_provider.tiempoDisponible,
-        tamanio: e.tamaniogrande,
-      ).then((value) => value==1 ? user_provider.mascotaPredecible.add(e) : 0);
-    });
-  }
+  // Future getMascotas(BuildContext context) async {
+  //   final user_provider = Provider.of<UserProvider>(context, listen: false);
+  //   user_provider.mascotaPredecible.clear();
+  //   List<Mascota> mascotasPredecibles = [];
+  //   Mascota.mascotas.forEach((e) async {
+  //     await getPrediccion(
+  //       espacio: user_provider.espacioDisponible,
+  //       economia: user_provider.estadoEconomico,
+  //       tiempo: user_provider.tiempoDisponible,
+  //       tamanio: e.tamaniogrande,
+  //     ).then((value) => value==1 ? user_provider.mascotaPredecible.add(e) : 0);
+  //   });
+  // }
 }

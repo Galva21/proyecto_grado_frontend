@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pet_app/model/mascota.dart';
 
 class UserProvider with ChangeNotifier {
-  int _espacioDisponible = -1;
-  int _estadoEconomico = -1;
-  int _tiempoDisponible = -1;
+  int _espacioDisponible = 3;
+  int _estadoEconomico = 3;
+  int _tiempoDisponible = 3;
   List<Mascota> mascotaPredecible = [];
 
   List<Mascota> get getMascotaPredecible => this.mascotaPredecible;
