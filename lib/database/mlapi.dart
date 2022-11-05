@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pet_app/model/mascota.dart';
-import 'package:pet_app/provider/user_provider.dart';
 import 'package:pet_app/utils/data.dart';
 import 'package:provider/provider.dart';
 

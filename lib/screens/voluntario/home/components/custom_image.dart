@@ -31,37 +31,51 @@ class CustomImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: borderRadius ?? BorderRadius.circular(radius),
-          boxShadow: [
-            if (isShadow)
-              BoxShadow(
-                color: shadowColor.withOpacity(0.1),
-                spreadRadius: 1,
-                blurRadius: 1,
-                offset: Offset(0, 1), // changes position of shadow
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: borderRadius ?? BorderRadius.circular(radius),
+        boxShadow: [
+          if (isShadow)
+            BoxShadow(
+              color: shadowColor.withOpacity(
+                0.1,
               ),
-          ],
-        ),
-        child: isNetwork
-            ? CachedNetworkImage(
-                imageUrl: image,
-                placeholder: (context, url) => BlankImageWidget(),
-                errorWidget: (context, url, error) => BlankImageWidget(),
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    borderRadius: borderRadius ?? BorderRadius.circular(radius),
-                    image: DecorationImage(image: imageProvider, fit: fit),
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: Offset(
+                0,
+                1,
+              ), // changes position of shadow
+            ),
+        ],
+      ),
+      child: isNetwork
+          ? CachedNetworkImage(
+              imageUrl: image,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(
+                Icons.error,
+                color: Colors.red,
+              ),
+              imageBuilder: (context, imageProvider) => Container(
+                decoration: BoxDecoration(
+                  borderRadius: borderRadius ?? BorderRadius.circular(radius),
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: fit,
                   ),
                 ),
-              )
-            : Image(
-                image: AssetImage(image),
-                fit: fit,
-              ));
+              ),
+            )
+          : Image(
+              image: AssetImage(
+                image,
+              ),
+              fit: fit,
+            ),
+    );
   }
 }
 

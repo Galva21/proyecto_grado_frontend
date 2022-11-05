@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:pet_app/model/mascota.dart';
 import 'package:pet_app/utils/color.dart';
+import 'package:time_machine/time_machine.dart';
 import 'custom_image.dart';
 
 class PetItem extends StatelessWidget {
@@ -12,17 +13,26 @@ class PetItem extends StatelessWidget {
       this.height = 400,
       this.radius = 40,
       this.onTap,
-      this.onFavoriteTap})
+      this.onDeleteTap})
       : super(key: key);
   final Mascota data;
   final double width;
   final double height;
   final double radius;
   final GestureTapCallback? onTap;
-  final GestureTapCallback? onFavoriteTap;
+  final GestureTapCallback? onDeleteTap;
 
   @override
   Widget build(BuildContext context) {
+    int cantidadMeses = 0;
+    int cantidadAnios = 0;
+    LocalDateTime a = LocalDateTime.now();
+    LocalDateTime b =
+        LocalDateTime.dateTime(DateTime.parse(data.fechaNacimiento!));
+    Period diff = a.periodSince(b);
+    cantidadMeses = diff.months;
+    cantidadAnios = diff.years;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -38,7 +48,9 @@ class PetItem extends StatelessWidget {
               child: CustomImage(
                 data.foto!,
                 borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(radius), bottom: Radius.zero),
+                  top: Radius.circular(radius),
+                  bottom: Radius.zero,
+                ),
                 isShadow: false,
                 width: width,
                 height: 350,
@@ -62,7 +74,10 @@ class PetItem extends StatelessWidget {
                         color: shadowColor.withOpacity(0.1),
                         spreadRadius: 1,
                         blurRadius: 1,
-                        offset: Offset(0, 2), // changes position of shadow
+                        // offset: Offset(
+                        //   0,
+                        //   2,
+                        // ), // changes position of shadow
                       ),
                     ],
                   ),
@@ -77,11 +92,31 @@ class PetItem extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                  color: glassTextColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600),
+                                color: glassTextColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
+                            flex: 8,
                           ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: onDeleteTap,
+                              child: Container(
+                                child: Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                  size: 25,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.red.shade400,
+                                ),
+                                padding: EdgeInsets.all(5),
+                              ),
+                            ),
+                            flex: 2,
+                          )
                         ],
                       ),
                       SizedBox(
@@ -91,7 +126,10 @@ class PetItem extends StatelessWidget {
                         data.descripcion!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: glassLabelColor, fontSize: 13),
+                        style: TextStyle(
+                          color: glassLabelColor,
+                          fontSize: 13,
+                        ),
                       ),
                       SizedBox(
                         height: 15,
@@ -108,8 +146,13 @@ class PetItem extends StatelessWidget {
                             data.color!,
                           ),
                           getAttribute(
-                            Icons.query_builder,
-                            data.fechaNacimiento!,
+                            Icons.calendar_month_outlined,
+                            cantidadAnios == 0
+                                ? cantidadMeses.toString() + " meses"
+                                : cantidadAnios.toString() +
+                                    " año/s y " +
+                                    cantidadMeses.toString() +
+                                    " mes/es",
                           ),
                         ],
                       ),

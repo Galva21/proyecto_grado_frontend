@@ -1,37 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:pet_app/database/api.dart';
 import 'package:pet_app/model/mascota.dart';
 
 class UserProvider with ChangeNotifier {
-  int _espacioDisponible = 3;
-  int _estadoEconomico = 3;
-  int _tiempoDisponible = 3;
-  List<Mascota> mascotaPredecible = [];
+  int tipoSeleccionado = 0;
+  List<Mascota> mascotas = [];
+  List<Mascota> gatos = [];
+  List<Mascota> perros = [];
 
-  List<Mascota> get getMascotaPredecible => this.mascotaPredecible;
+  get getMascotas => this.mascotas;
 
-  set setMascotaPredecible(List<Mascota> mascotaPredecible) {
-    this.mascotaPredecible = mascotaPredecible;
+  setMascotas() async{
+    gatos.clear();
+    perros.clear();
+    mascotas = await API().mascotas();
+    for (var e in mascotas) {
+      e.tipo == "Gato" ? gatos.add(e) : perros.add(e);
+    }
+    print("Se actualizo la lista de mascotas");
     notifyListeners();
   }
 
-  int get espacioDisponible => this._espacioDisponible;
+  int get getTipoSeleccionado => this.tipoSeleccionado;
 
-  set espacioDisponible(value) {
-    this._espacioDisponible = value;
-    notifyListeners();
-  }
-
-  int get estadoEconomico => this._estadoEconomico;
-
-  set estadoEconomico(value) {
-    this._estadoEconomico = value;
-    notifyListeners();
-  }
-
-  int get tiempoDisponible => this._tiempoDisponible;
-
-  set tiempoDisponible(value) {
-    this._tiempoDisponible = value;
+  set setTipoSeleccionado(int tipoSeleccionado) {
+    this.tipoSeleccionado = tipoSeleccionado;
     notifyListeners();
   }
 }

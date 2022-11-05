@@ -5,18 +5,44 @@ import 'package:http/http.dart' as http;
 import 'package:pet_app/model/mascota.dart';
 
 class API {
-  String mensaje = "";
+  Future<bool> eliminar_mascota(String id) async {
+    var url = Uri.parse(
+        "http://192.168.0.17/proyectogrado_api/mascota/eliminar_mascota.php");
+    var response = await http.post(url, body: {
+      'id': '${id}',
+    });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    dynamic data = json.decode(response.body);
+    print('Response decode body: ' + data[0]['mensaje'].toString());
+    return data[0]['salida'];
+  }
 
   Future<List<Mascota>> mascotas() async {
-    var url = Uri.parse(
-        "http://192.168.0.17/proyectogrado_api/mascota/mascotas.php");
+    List<Mascota> mascotas = [];
+    var url =
+        Uri.parse("http://192.168.0.17/proyectogrado_api/mascota/mascotas.php");
     var response = await http.post(url, body: {});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
-    final Map<String, dynamic> data = json.decode(response.body);
-    print('Response decode body: ' + data[0]['id_mascota'].toString());
-    List<Mascota> mascotas = [];
-    print(data.length);
+    final List<dynamic> data = json.decode(response.body);
+    for (var e in data) {
+      mascotas.add(Mascota(
+        idMascota: e['id_mascota'],
+        color: e['color'],
+        descripcion: e['descripcion'],
+        esterilizado: e['esterilizado'],
+        fechaIngreso: e['fecha_ingreso'],
+        fechaNacimiento: e['fecha_nacimiento'],
+        fechaSalida: e['fecha_salida'],
+        foto: e['foto'],
+        nombre: e['nombre'],
+        raza: e['raza'],
+        sexo: e['sexo'],
+        tipo: e['tipo'],
+        vacunado: e['vacunado'],
+      ));
+    }
     return mascotas;
   }
 

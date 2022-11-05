@@ -24,6 +24,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<UserProvider>(context, listen: false);
+    provider.setMascotas();
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -123,13 +125,17 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Spacer(),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
+                  onPressed: () async {
+                    await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: ((context) => NuevaMascotaPage()),
                       ),
-                    );
+                    ).then((value) {
+                      final provider =
+                          Provider.of<UserProvider>(context, listen: false);
+                      provider.setMascotas();
+                    });
                   },
                   child: Text(
                     "AGREGAR NUEVA MASCOTA".toUpperCase(),
@@ -141,6 +147,9 @@ class _HomePageState extends State<HomePage> {
                 Spacer(),
               ],
             ),
+            SizedBox(
+              height: 25,
+            ),
             GetPets()
           ],
         ),
@@ -148,16 +157,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  int selectedCategory = 0;
   getCategories() {
+    final provider = Provider.of<UserProvider>(context, listen: false);
     List<Widget> lists = List.generate(
         categories.length,
         (index) => CategoryItem(
               data: categories[index],
-              selected: index == selectedCategory,
+              selected: index == provider.getTipoSeleccionado,
               onTap: () {
                 setState(() {
-                  selectedCategory = index;
+                  provider.setTipoSeleccionado = index;
                 });
               },
             ));
