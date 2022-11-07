@@ -163,7 +163,7 @@ class _HomePageState extends State<HomePage> {
         categories.length,
         (index) => CategoryItem(
               data: categories[index],
-              selected: index == provider.getTipoSeleccionado,
+              selected: index == provider.tipoSeleccionado,
               onTap: () {
                 setState(() {
                   provider.setTipoSeleccionado = index;

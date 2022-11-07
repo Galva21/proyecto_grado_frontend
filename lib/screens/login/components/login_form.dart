@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:pet_app/database/api.dart';
+import 'package:pet_app/provider/user_provider.dart';
+import 'package:pet_app/screens/administrador/root_administrador.dart';
 import 'package:pet_app/screens/login/restablecer_cuenta.dart';
 import 'package:pet_app/screens/voluntario/root_voluntario.dart';
 import 'package:pet_app/utils/color.dart';
 import 'package:pet_app/utils/constant.dart';
+import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -21,6 +24,7 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     String _valueUsuario = "";
     String _valueContra = "";
+    final provider = Provider.of<UserProvider>(context, listen: false);
     return Form(
       child: Column(
         children: [
@@ -66,13 +70,22 @@ class _LoginFormState extends State<LoginForm> {
                   await API().iniciarSesion(_valueUsuario, _valueContra);
               if (query) {
                 if (_valueUsuario[0].toString() == 'V') {
+                  provider.setUsuarioLogeado(_valueUsuario);
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: ((context) => RootVoluntario()),
                     ),
                   );
-                } else {}
+                } else if (_valueUsuario[0].toString() == 'A') {
+                  provider.setAdminLogeado(_valueUsuario);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: ((context) => RootAdministrador()),
+                    ),
+                  );
+                }
               }
             },
             child: Text(

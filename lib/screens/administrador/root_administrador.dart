@@ -1,44 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:pet_app/screens/voluntario/adoptantes/adoptantes.dart';
-import 'package:pet_app/screens/voluntario/home/home.dart';
-import 'package:pet_app/screens/voluntario/perfil/perfil.dart';
-import 'package:pet_app/screens/voluntario/prediccion/prediccion_mascotas.dart';
-import 'package:pet_app/utils/color.dart';
+import 'package:pet_app/screens/administrador/home/voluntarios.dart';
+import 'package:pet_app/screens/administrador/perfil/perfil.dart';
 import 'package:pet_app/screens/components/bottombar_item.dart';
+import 'package:pet_app/utils/color.dart';
 
-class RootVoluntario extends StatefulWidget {
-  const RootVoluntario({Key? key}) : super(key: key);
+class RootAdministrador extends StatefulWidget {
+  const RootAdministrador({Key? key}) : super(key: key);
 
   @override
-  _RootAppState createState() => _RootAppState();
+  State<RootAdministrador> createState() => _RootAdministradorState();
 }
 
-class _RootAppState extends State<RootVoluntario>
+class _RootAdministradorState extends State<RootAdministrador>
     with TickerProviderStateMixin {
   int activeTab = 0;
   List barItems = [
     {
       "icon": "assets/icons/home-border.svg",
       "active_icon": "assets/icons/home.svg",
-      "page": HomePage(),
+      "page": VoluntariosPage(),
       "title": "Home"
-    },
-    {
-      "icon": "assets/icons/pet-border.svg",
-      "active_icon": "assets/icons/pet.svg",
-      "page": PrediccionMascotas(),
-      "title": "Mascotas"
-    },
-    {
-      "icon": "assets/icons/plus-border.svg",
-      "active_icon": "assets/icons/plus.svg",
-      "page": AdoptantesPage(),
-      "title": "Adoptantes"
     },
     {
       "icon": "assets/icons/setting-border.svg",
       "active_icon": "assets/icons/setting.svg",
-      "page": PerfilPage(),
+      "page": PerfilAdministrador(),
       "title": ""
     },
   ];
