@@ -4,30 +4,37 @@ class Mascota {
   String? nombre;
   String? tipo;
   String? vacunado;
+  String? desparacitado;
   String? esterilizado;
   String? raza;
   String? sexo;
   String? color;
+  String? madurez;
   String? descripcion;
   String? fechaNacimiento;
   String? foto;
   String? fechaIngreso;
   String? fechaSalida;
+  int? tiempoAdopcion;
 
   Mascota(
       {this.idMascota,
       this.nombre,
       this.tipo,
       this.vacunado,
+      this.desparacitado,
       this.esterilizado,
       this.raza,
       this.sexo,
       this.color,
+      this.madurez,
       this.descripcion,
       this.fechaNacimiento,
       this.foto,
       this.fechaIngreso,
-      this.fechaSalida});
+      this.fechaSalida,
+      this.tiempoAdopcion,
+      });
 
   Mascota.fromJson(Map<String, dynamic> json) {
     idMascota = json['id_mascota'];

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pet_app/database/api.dart';
+import 'package:pet_app/database/mlapi.dart';
 import 'package:pet_app/screens/login/components/login_form.dart';
 import 'package:pet_app/utils/color.dart';
+import 'package:time_machine/time_machine.dart';
 
 class NuevaMascotaPage extends StatefulWidget {
   const NuevaMascotaPage({Key? key}) : super(key: key);
@@ -23,14 +25,25 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
   final itemsSiNo = ['Si', 'No'];
   final itemRaza = ['Raza1', 'Raza2', 'Raza3', 'Raza4'];
   final itemSexo = ['Macho', 'Hembra'];
-  final itemColor = ['Color', 'Color2', 'Color3', 'Color4'];
+  final itemColor = [
+    'Negro',
+    'Marron',
+    'Dorado',
+    'Amarillo',
+    'Manchas',
+    'Gris',
+    'Blanco'
+  ];
+  final itemMadurez = ['Pequeño', 'Mediano', 'Grande', 'Muy grande'];
   String _nombre = "";
   String? _tipo;
   String? _vacunado;
   String? _esterilizado;
+  String? _desparacitado;
   String? _raza;
   String? _sexo;
   String? _color;
+  String? _madurez;
   String _descripcion = "";
   String _fechaNacimiento = "";
   String _foto = "";
@@ -147,6 +160,37 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(29),
                     ),
+                    child: Text("Desparacitado"),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: kPrimaryLightColor,
+                      borderRadius: BorderRadius.circular(29),
+                    ),
+                    child: DropdownButton<String>(
+                      value: _desparacitado,
+                      items: itemsSiNo.map(buildMenuItemTipos).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _desparacitado = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(29),
+                    ),
                     child: Text("Esterilizado"),
                   ),
                   Container(
@@ -168,37 +212,37 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                   ),
                 ],
               ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(29),
-                    ),
-                    child: Text("Raza"),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    decoration: BoxDecoration(
-                      color: kPrimaryLightColor,
-                      borderRadius: BorderRadius.circular(29),
-                    ),
-                    child: DropdownButton<String>(
-                      value: _raza,
-                      items: itemRaza.map(buildMenuItemTipos).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _raza = value!;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisSize: MainAxisSize.min,
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   children: [
+              //     Container(
+              //       margin: EdgeInsets.symmetric(vertical: 10),
+              //       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(29),
+              //       ),
+              //       child: Text("Raza"),
+              //     ),
+              //     Container(
+              //       margin: EdgeInsets.symmetric(vertical: 10),
+              //       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              //       decoration: BoxDecoration(
+              //         color: kPrimaryLightColor,
+              //         borderRadius: BorderRadius.circular(29),
+              //       ),
+              //       child: DropdownButton<String>(
+              //         value: _raza,
+              //         items: itemRaza.map(buildMenuItemTipos).toList(),
+              //         onChanged: (value) {
+              //           setState(() {
+              //             _raza = value!;
+              //           });
+              //         },
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -255,6 +299,37 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                       onChanged: (value) {
                         setState(() {
                           _color = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(29),
+                    ),
+                    child: Text("Madurez"),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: kPrimaryLightColor,
+                      borderRadius: BorderRadius.circular(29),
+                    ),
+                    child: DropdownButton<String>(
+                      value: _madurez,
+                      items: itemMadurez.map(buildMenuItemTipos).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _madurez = value!;
                         });
                       },
                     ),
@@ -354,6 +429,7 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
               ),
               ElevatedButton(
                 onPressed: () async {
+                  await MLapi().getPrediccion();
                   if (_nombre == "" ||
                       _tipo == "" ||
                       _vacunado == "" ||
@@ -374,19 +450,124 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                       fontSize: 20,
                     );
                   } else {
-                    bool query = await API().insertarMascota(
-                      _nombre,
-                      _tipo!,
-                      _vacunado!,
-                      _esterilizado!,
-                      _raza!,
-                      _sexo!,
-                      _color!,
-                      _descripcion,
-                      _fechaNacimiento,
-                      _foto,
-                      _fechaIngreso,
+                    int tipoP = 0;
+                    int sexoP = 0;
+                    int colorP = 0;
+                    int madurezP = 0;
+                    int vacunadoP = 0;
+                    int desparacitadoP = 0;
+                    int esterilizadoP = 0;
+                    int cantidadMeses = 0;
+
+                    LocalDateTime a = LocalDateTime.now();
+                    LocalDateTime b = LocalDateTime.dateTime(
+                        DateTime.parse("2022-06-01"));
+                    Period diff = a.periodSince(b);
+                    cantidadMeses = diff.months;
+
+                    switch (_esterilizado) {
+                      case "Si":
+                        esterilizadoP = 1;
+                        break;
+                      case "No":
+                        esterilizadoP = 2;
+                        break;
+                    }
+                    switch (_desparacitado) {
+                      case "Si":
+                        desparacitadoP = 1;
+                        break;
+                      case "No":
+                        desparacitadoP = 2;
+                        break;
+                    }
+                    switch (_vacunado) {
+                      case "Si":
+                        vacunadoP = 1;
+                        break;
+                      case "No":
+                        vacunadoP = 2;
+                        break;
+                    }
+                    switch (_madurez) {
+                      case "Pequeño":
+                        madurezP = 1;
+                        break;
+                      case "Mediano":
+                        madurezP = 2;
+                        break;
+                      case "Grande":
+                        madurezP = 3;
+                        break;
+                      case "Muy grande":
+                        madurezP = 4;
+                        break;
+                    }
+                    switch (_tipo) {
+                      case "Perro":
+                        tipoP = 1;
+                        break;
+                      case "Gato":
+                        tipoP = 2;
+                        break;
+                    }
+                    switch (_sexo) {
+                      case "Macho":
+                        sexoP = 1;
+                        break;
+                      case "Hembra":
+                        sexoP = 2;
+                        break;
+                    }
+                    switch (_color) {
+                      case "Negro":
+                        colorP = 1;
+                        break;
+                      case "Marron":
+                        colorP = 2;
+                        break;
+                      case "Dorado":
+                        colorP = 3;
+                        break;
+                      case "Amarillo":
+                        colorP = 4;
+                        break;
+                      case "Manchas":
+                        colorP = 5;
+                        break;
+                      case "Gris":
+                        colorP = 6;
+                        break;
+                      case "Blanco":
+                        colorP = 7;
+                        break;
+                    }
+                    int tiempoAdopcion = await MLapi().getPrediccion(
+                      color: colorP,
+                      desparacitado: desparacitadoP,
+                      edad: cantidadMeses,
+                      esterilizado: esterilizadoP,
+                      madurez: madurezP,
+                      sexo: sexoP,
+                      tipo: tipoP,
+                      vacunado: vacunadoP,
                     );
+                    //mlapi
+                    bool query = await API().insertarMascota(
+                        _nombre,
+                        _tipo!,
+                        _vacunado!,
+                        _desparacitado!,
+                        _esterilizado!,
+                        "",
+                        _sexo!,
+                        _color!,
+                        _madurez!,
+                        _descripcion,
+                        _fechaNacimiento,
+                        _foto,
+                        _fechaIngreso,
+                        tiempoAdopcion);
                     if (query) {
                       Fluttertoast.showToast(
                         msg: "Mascota registrada con exito",

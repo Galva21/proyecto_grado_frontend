@@ -6,6 +6,7 @@ import 'package:pet_app/model/mascota.dart';
 
 class UserProvider with ChangeNotifier {
   int tipoSeleccionado = 0;
+  int prediccionSeleccionado = 0;
   Usuario usuarioLogeado = Usuario(
       id: "",
       ci: "",
@@ -26,6 +27,10 @@ class UserProvider with ChangeNotifier {
   List<Adoptante> adoptantes = [];
   List<Mascota> gatos = [];
   List<Mascota> perros = [];
+  List<Mascota> prediccion1 = [];
+  List<Mascota> prediccion2 = [];
+  List<Mascota> prediccion3 = [];
+  List<Mascota> prediccion4 = [];
 
   setUsuarioLogeado(String id) async {
     usuarioLogeado = await API().voluntarioLogeado(id);
@@ -45,6 +50,20 @@ class UserProvider with ChangeNotifier {
     mascotas = await API().mascotas();
     for (var e in mascotas) {
       e.tipo == "Gato" ? gatos.add(e) : perros.add(e);
+      switch (e.tiempoAdopcion) {
+        case 1:
+          prediccion1.add(e);
+          break;
+        case 2:
+          prediccion2.add(e);
+          break;
+        case 3:
+          prediccion3.add(e);
+          break;
+        case 4:
+          prediccion4.add(e);
+          break;
+      }
     }
     print("Se actualizo la lista de mascotas");
     notifyListeners();
@@ -64,6 +83,11 @@ class UserProvider with ChangeNotifier {
 
   set setTipoSeleccionado(int tipoSeleccionado) {
     this.tipoSeleccionado = tipoSeleccionado;
+    notifyListeners();
+  }
+
+  set setPrediccionSeleccionado(int tipoSeleccionado) {
+    this.prediccionSeleccionado = tipoSeleccionado;
     notifyListeners();
   }
 }

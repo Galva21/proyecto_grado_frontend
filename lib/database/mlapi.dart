@@ -7,21 +7,29 @@ import 'package:provider/provider.dart';
 
 class MLapi {
   Future<int> getPrediccion({
-    int? espacio = 3,
-    int? economia = 3,
-    int? tiempo = 3,
-    int? tamanio = 3,
+    int? tipo = 3,
+    int? edad = 3,
+    int? sexo = 3,
+    int? color = 3,
+    int? madurez = 3,
+    int? vacunado = 3,
+    int? desparacitado = 3,
+    int? esterilizado = 3,
   }) async {
-    var url = Uri.parse('https://cryptic-bastion-36121.herokuapp.com/');
+    var url = Uri.parse('https://serene-escarpment-63545.herokuapp.com/');
     var response = await http.post(url,
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
         body: jsonEncode(<String, int>{
-          "tamaniogrande": tamanio!,
-          "espacioDisponible": espacio!,
-          "estadoEconomico": economia!,
-          "tiempoDisponible": tiempo!
+          "tipo": tipo!,
+          "edad": edad!,
+          "sexo": sexo!,
+          "color": color!,
+          "madurez": madurez!,
+          "vacunado": vacunado!,
+          "desparacitado": desparacitado!,
+          "esterilizado": esterilizado!
         }));
     // print('Response status: ${response.statusCode}');
     // print('Response body: ${response.body}');

@@ -150,9 +150,9 @@ class PetItem extends StatelessWidget {
                             cantidadAnios == 0
                                 ? cantidadMeses.toString() + " meses"
                                 : cantidadAnios.toString() +
-                                    " año/s y " +
+                                    " años y " +
                                     cantidadMeses.toString() +
-                                    " mes/es",
+                                    " meses",
                           ),
                         ],
                       ),
