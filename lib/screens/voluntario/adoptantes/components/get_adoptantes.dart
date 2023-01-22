@@ -7,6 +7,7 @@ import 'package:pet_app/provider/user_provider.dart';
 import 'package:pet_app/screens/administrador/home/components/usuario_item.dart';
 import 'package:pet_app/screens/components/alert_dialog.dart';
 import 'package:pet_app/screens/voluntario/adoptantes/components/adoptante_item.dart';
+import 'package:pet_app/screens/voluntario/adoptantes/components/nueva_adopcion.dart';
 import 'package:provider/provider.dart';
 
 class GetAdoptantes extends StatefulWidget {
@@ -74,7 +75,15 @@ class _GetAdoptantesState extends State<GetAdoptantes> {
                       (index) => AdoptanteItem(
                         data: provider.adoptantes[index],
                         width: width,
-                        onTap: () {},
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: ((context) => NuevaAdopcion(
+                                  id: provider.adoptantes[index].id)),
+                            ),
+                          );
+                        },
                         onDeleteTap: () async {
                           showDialog(
                             context: context,

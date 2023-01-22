@@ -5,8 +5,8 @@ import 'package:pet_app/utils/color.dart';
 import 'package:time_machine/time_machine.dart';
 import 'custom_image.dart';
 
-class PetItem extends StatelessWidget {
-  const PetItem(
+class PetItemAux extends StatelessWidget {
+  const PetItemAux(
       {Key? key,
       required this.data,
       this.width = 350,
@@ -37,8 +37,8 @@ class PetItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: width,
-        height: height,
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+        height: 500,
+        margin: EdgeInsets.fromLTRB(30, 0, 0, 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(radius),
         ),
@@ -53,18 +53,18 @@ class PetItem extends StatelessWidget {
                 ),
                 isShadow: false,
                 width: width,
-                height: 350,
+                height: 250,
               ),
             ),
             Positioned(
-              bottom: 30,
+              bottom: 20,
               child: GlassContainer(
                 borderRadius: BorderRadius.circular(25),
                 blur: 10,
                 opacity: 0.05,
                 child: Container(
                   width: width,
-                  height: 170,
+                  height: 270,
                   padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.2),
@@ -189,6 +189,56 @@ class PetItem extends StatelessWidget {
                           getAttributeText(
                             "Pelaje",
                             data.pelaje!,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "----------------------------------------------------------------------------------",
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          getAttributeText(
+                            "CI",
+                            "16398422",
+                          ),
+                          getAttributeText(
+                            "Nombre",
+                            "Carlos Torres",
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          getAttributeText(
+                            "Telefono",
+                            "7365698",
+                          ),
+                          getAttributeText(
+                            "Fecha",
+                            "2022-12-05",
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          getAttributeText(
+                            "Dirección",
+                            "Calle los angeles #123 Villa Armonia",
                           ),
                         ],
                       ),

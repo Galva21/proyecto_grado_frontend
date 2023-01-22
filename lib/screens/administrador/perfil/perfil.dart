@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/provider/user_provider.dart';
+import 'package:pet_app/screens/splash_screen.dart';
 import 'package:pet_app/utils/color.dart';
 import 'package:provider/provider.dart';
 
@@ -183,17 +184,25 @@ class _PerfilAdministradorState extends State<PerfilAdministrador> {
                     ),
                   ],
                 ),
-                // ElevatedButton(
-                //   onPressed: () async {
-
-                //   },
-                //   child: Text(
-                //     "CERRAR SESIÓN".toUpperCase(),
-                //   ),
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: kPrimaryColor,
-                //   ),
-                // ),
+                SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => SplashScreen()),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "CERRAR SESIÓN".toUpperCase(),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kPrimaryColor,
+                  ),
+                ),
                 SizedBox(
                   height: 125,
                 ),
@@ -205,7 +214,6 @@ class _PerfilAdministradorState extends State<PerfilAdministrador> {
     );
   }
 }
-
 
 class RoundedInputField extends StatelessWidget {
   final String hint;

@@ -34,16 +34,18 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
     'Gris',
     'Blanco'
   ];
-  final itemMadurez = ['Pequeño', 'Mediano', 'Grande', 'Muy grande'];
+  final itemMadurez = ['Pequeño', 'Mediano', 'Grande'];
+  final itemPelaje = ['Corto', 'Mediano', 'Largo'];
   String _nombre = "";
   String? _tipo;
   String? _vacunado;
   String? _esterilizado;
   String? _desparacitado;
-  String? _raza;
+  String _raza = "";
   String? _sexo;
   String? _color;
   String? _madurez;
+  String? _pelaje;
   String _descripcion = "";
   String _fechaNacimiento = "";
   String _foto = "";
@@ -315,7 +317,7 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(29),
                     ),
-                    child: Text("Madurez"),
+                    child: Text("Tamaño de madurez"),
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 10),
@@ -336,20 +338,51 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                   ),
                 ],
               ),
-              TextFieldContainer(
-                child: TextField(
-                  maxLength: 250,
-                  onChanged: (value) {
-                    _descripcion = value;
-                  },
-                  decoration: InputDecoration(
-                    icon:
-                        Icon(Icons.add_reaction_outlined, color: kPrimaryColor),
-                    hintText: "Descripción",
-                    border: InputBorder.none,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(29),
+                    ),
+                    child: Text("Longitud de pelaje"),
                   ),
-                ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: kPrimaryLightColor,
+                      borderRadius: BorderRadius.circular(29),
+                    ),
+                    child: DropdownButton<String>(
+                      value: _pelaje,
+                      items: itemPelaje.map(buildMenuItemTipos).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _pelaje = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
+              // TextFieldContainer(
+              //   child: TextField(
+              //     maxLength: 250,
+              //     onChanged: (value) {
+              //       _descripcion = value;
+              //     },
+              //     decoration: InputDecoration(
+              //       icon:
+              //           Icon(Icons.add_reaction_outlined, color: kPrimaryColor),
+              //       hintText: "Descripción",
+              //       border: InputBorder.none,
+              //     ),
+              //   ),
+              // ),
               TextFieldContainer(
                 child: TextField(
                   onTap: (() async {
@@ -434,10 +467,10 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                       _tipo == "" ||
                       _vacunado == "" ||
                       _esterilizado == "" ||
-                      _raza == "" ||
+                      _desparacitado == "" ||
                       _sexo == "" ||
                       _color == "" ||
-                      _descripcion == "" ||
+                      _pelaje == "" ||
                       _fechaNacimiento == "" ||
                       _foto == "" ||
                       _fechaIngreso == "") {
@@ -460,8 +493,8 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                     int cantidadMeses = 0;
 
                     LocalDateTime a = LocalDateTime.now();
-                    LocalDateTime b = LocalDateTime.dateTime(
-                        DateTime.parse("2022-06-01"));
+                    LocalDateTime b =
+                        LocalDateTime.dateTime(DateTime.parse("2022-06-01"));
                     Period diff = a.periodSince(b);
                     cantidadMeses = diff.months;
 
@@ -554,20 +587,20 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                     );
                     //mlapi
                     bool query = await API().insertarMascota(
-                        _nombre,
-                        _tipo!,
-                        _vacunado!,
-                        _desparacitado!,
-                        _esterilizado!,
-                        "",
-                        _sexo!,
-                        _color!,
-                        _madurez!,
-                        _descripcion,
-                        _fechaNacimiento,
-                        _foto,
-                        _fechaIngreso,
-                        tiempoAdopcion);
+                      nombre: _nombre,
+                      tipo: _tipo!,
+                      vacunado: _vacunado!,
+                      desparacitado: _desparacitado!,
+                      esterilizado: _esterilizado!,
+                      sexo: _sexo!,
+                      color: _color!,
+                      madurez: _madurez!,
+                      pelaje: _pelaje!,
+                      fechaNacimiento: _fechaNacimiento,
+                      foto: _foto,
+                      fechaIngreso: _fechaIngreso,
+                      tiempoAdopcion: tiempoAdopcion,
+                    );
                     if (query) {
                       Fluttertoast.showToast(
                         msg: "Mascota registrada con exito",

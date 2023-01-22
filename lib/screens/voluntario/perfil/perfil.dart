@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:pet_app/provider/user_provider.dart';
 import 'package:pet_app/screens/login/components/login_form.dart';
+import 'package:pet_app/screens/splash_screen.dart';
 import 'package:pet_app/utils/color.dart';
 import 'package:provider/provider.dart';
 
@@ -189,17 +190,25 @@ class _PerfilPageState extends State<PerfilPage> {
                     ),
                   ],
                 ),
-                // ElevatedButton(
-                //   onPressed: () async {
-
-                //   },
-                //   child: Text(
-                //     "CERRAR SESIÓN".toUpperCase(),
-                //   ),
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: kPrimaryColor,
-                //   ),
-                // ),
+                SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => SplashScreen()),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "CERRAR SESIÓN".toUpperCase(),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kPrimaryColor,
+                  ),
+                ),
                 SizedBox(
                   height: 125,
                 ),

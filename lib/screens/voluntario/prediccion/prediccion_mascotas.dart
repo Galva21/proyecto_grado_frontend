@@ -21,7 +21,12 @@ class _PrediccionMascotasState extends State<PrediccionMascotas> {
         value: item,
         child: Text(item),
       );
-  final itemsPrediccion = ['1 a 7 días', '8 a 30 días', '31 a 90 días', 'Despues de 100 días'];
+  final itemsPrediccion = [
+    '1 a 7 días',
+    '8 a 30 días',
+    '31 a 90 días',
+    'Despues de 100 días'
+  ];
   String? _prediccion;
   bool cargando = true;
 
@@ -92,13 +97,13 @@ class _PrediccionMascotasState extends State<PrediccionMascotas> {
                         setState(() {
                           int index = 0;
                           _prediccion = value;
-                          if(value=="1 a 7 días"){
+                          if (value == "1 a 7 días") {
                             index = 1;
-                          }else if(value == "8 a 30 días"){
+                          } else if (value == "8 a 30 días") {
                             index = 2;
-                          }else if(value == "31 a 90 días"){
+                          } else if (value == "31 a 90 días") {
                             index = 3;
-                          }else {
+                          } else {
                             index = 4;
                           }
                           provider.setPrediccionSeleccionado = index;
@@ -141,280 +146,361 @@ class _PrediccionMascotasState extends State<PrediccionMascotas> {
                       : Column(
                           children: [
                             CarouselSlider(
-                              options: CarouselOptions(
-                                height: 400,
-                                enlargeCenterPage: true,
-                                disableCenter: true,
-                                viewportFraction: .8,
-                              ),
-                              items: provider.prediccionSeleccionado == 1
-                                  ? List.generate(
-                                      provider.prediccion1.length,
-                                      (index) => PetItem(
-                                        data: provider.prediccion1[index],
-                                        width: width,
-                                        onTap: () {},
-                                        onDeleteTap: () async {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialogSiNo(
-                                                mensaje:
-                                                    "¿Seguro desea eliminar esta mascota?",
-                                                onTap: () async {
-                                                  bool query = await API()
-                                                      .eliminar_mascota(provider
-                                                          .prediccion1[index]
-                                                          .idMascota!);
-                                                  if (query) {
-                                                    Fluttertoast.showToast(
-                                                      msg:
-                                                          "Mascota eliminada con exito",
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                      gravity: ToastGravity.TOP,
-                                                      backgroundColor:
-                                                          Colors.green,
-                                                      textColor: Colors.white,
-                                                      fontSize: 20,
+                                options: CarouselOptions(
+                                  height: 400,
+                                  enlargeCenterPage: true,
+                                  disableCenter: true,
+                                  viewportFraction: .8,
+                                ),
+                                items: provider.prediccionSeleccionado == 1
+                                    ? List.generate(
+                                        provider.prediccion1.length,
+                                        (index) => PetItem(
+                                          data: provider.prediccion1[index],
+                                          width: width,
+                                          onTap: () {},
+                                          onDeleteTap: () async {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialogSiNo(
+                                                  mensaje:
+                                                      "¿Seguro desea eliminar esta mascota?",
+                                                  onTap: () async {
+                                                    bool query = await API()
+                                                        .eliminar_mascota(
+                                                            provider
+                                                                .prediccion1[
+                                                                    index]
+                                                                .idMascota!);
+                                                    if (query) {
+                                                      Fluttertoast.showToast(
+                                                        msg:
+                                                            "Mascota eliminada con exito",
+                                                        toastLength:
+                                                            Toast.LENGTH_SHORT,
+                                                        gravity:
+                                                            ToastGravity.TOP,
+                                                        backgroundColor:
+                                                            Colors.green,
+                                                        textColor: Colors.white,
+                                                        fontSize: 20,
+                                                      );
+                                                      provider.setMascotas();
+                                                      Navigator.pop(context);
+                                                    } else {
+                                                      Fluttertoast.showToast(
+                                                        msg:
+                                                            "Ocurrio un problema al eliminar a la mascota",
+                                                        toastLength:
+                                                            Toast.LENGTH_SHORT,
+                                                        gravity:
+                                                            ToastGravity.TOP,
+                                                        backgroundColor:
+                                                            Colors.red,
+                                                        textColor: Colors.white,
+                                                        fontSize: 20,
+                                                      );
+                                                      Navigator.pop(context);
+                                                    }
+                                                  },
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      )
+                                    : provider.prediccionSeleccionado == 2
+                                        ? List.generate(
+                                            provider.prediccion2.length,
+                                            (index) => PetItem(
+                                              data: provider.prediccion2[index],
+                                              width: width,
+                                              onTap: () {},
+                                              onDeleteTap: () async {
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialogSiNo(
+                                                      mensaje:
+                                                          "¿Seguro desea eliminar esta mascota?",
+                                                      onTap: () async {
+                                                        bool query = await API()
+                                                            .eliminar_mascota(
+                                                                provider
+                                                                    .prediccion2[
+                                                                        index]
+                                                                    .idMascota!);
+                                                        if (query) {
+                                                          Fluttertoast
+                                                              .showToast(
+                                                            msg:
+                                                                "Mascota eliminada con exito",
+                                                            toastLength: Toast
+                                                                .LENGTH_SHORT,
+                                                            gravity:
+                                                                ToastGravity
+                                                                    .TOP,
+                                                            backgroundColor:
+                                                                Colors.green,
+                                                            textColor:
+                                                                Colors.white,
+                                                            fontSize: 20,
+                                                          );
+                                                          provider
+                                                              .setMascotas();
+                                                          Navigator.pop(
+                                                              context);
+                                                        } else {
+                                                          Fluttertoast
+                                                              .showToast(
+                                                            msg:
+                                                                "Ocurrio un problema al eliminar a la mascota",
+                                                            toastLength: Toast
+                                                                .LENGTH_SHORT,
+                                                            gravity:
+                                                                ToastGravity
+                                                                    .TOP,
+                                                            backgroundColor:
+                                                                Colors.red,
+                                                            textColor:
+                                                                Colors.white,
+                                                            fontSize: 20,
+                                                          );
+                                                          Navigator.pop(
+                                                              context);
+                                                        }
+                                                      },
                                                     );
-                                                    provider.setMascotas();
-                                                    Navigator.pop(context);
-                                                  } else {
-                                                    Fluttertoast.showToast(
-                                                      msg:
-                                                          "Ocurrio un problema al eliminar a la mascota",
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                      gravity: ToastGravity.TOP,
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                      textColor: Colors.white,
-                                                      fontSize: 20,
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          )
+                                        : provider.prediccionSeleccionado == 3
+                                            ? List.generate(
+                                                provider.prediccion3.length,
+                                                (index) => PetItem(
+                                                  data: provider
+                                                      .prediccion3[index],
+                                                  width: width,
+                                                  onTap: () {},
+                                                  onDeleteTap: () async {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return AlertDialogSiNo(
+                                                          mensaje:
+                                                              "¿Seguro desea eliminar esta mascota?",
+                                                          onTap: () async {
+                                                            bool query = await API()
+                                                                .eliminar_mascota(provider
+                                                                    .prediccion3[
+                                                                        index]
+                                                                    .idMascota!);
+                                                            if (query) {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                msg:
+                                                                    "Mascota eliminada con exito",
+                                                                toastLength: Toast
+                                                                    .LENGTH_SHORT,
+                                                                gravity:
+                                                                    ToastGravity
+                                                                        .TOP,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .green,
+                                                                textColor:
+                                                                    Colors
+                                                                        .white,
+                                                                fontSize: 20,
+                                                              );
+                                                              provider
+                                                                  .setMascotas();
+                                                              Navigator.pop(
+                                                                  context);
+                                                            } else {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                msg:
+                                                                    "Ocurrio un problema al eliminar a la mascota",
+                                                                toastLength: Toast
+                                                                    .LENGTH_SHORT,
+                                                                gravity:
+                                                                    ToastGravity
+                                                                        .TOP,
+                                                                backgroundColor:
+                                                                    Colors.red,
+                                                                textColor:
+                                                                    Colors
+                                                                        .white,
+                                                                fontSize: 20,
+                                                              );
+                                                              Navigator.pop(
+                                                                  context);
+                                                            }
+                                                          },
+                                                        );
+                                                      },
                                                     );
-                                                    Navigator.pop(context);
-                                                  }
-                                                },
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    )
-                                  : provider.prediccionSeleccionado == 2
-                                  ? List.generate(
-                                      provider.prediccion2.length,
-                                      (index) => PetItem(
-                                        data: provider.prediccion2[index],
-                                        width: width,
-                                        onTap: () {},
-                                        onDeleteTap: () async {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialogSiNo(
-                                                mensaje:
-                                                    "¿Seguro desea eliminar esta mascota?",
-                                                onTap: () async {
-                                                  bool query = await API()
-                                                      .eliminar_mascota(provider
-                                                          .prediccion2[index]
-                                                          .idMascota!);
-                                                  if (query) {
-                                                    Fluttertoast.showToast(
-                                                      msg:
-                                                          "Mascota eliminada con exito",
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                      gravity: ToastGravity.TOP,
-                                                      backgroundColor:
-                                                          Colors.green,
-                                                      textColor: Colors.white,
-                                                      fontSize: 20,
-                                                    );
-                                                    provider.setMascotas();
-                                                    Navigator.pop(context);
-                                                  } else {
-                                                    Fluttertoast.showToast(
-                                                      msg:
-                                                          "Ocurrio un problema al eliminar a la mascota",
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                      gravity: ToastGravity.TOP,
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                      textColor: Colors.white,
-                                                      fontSize: 20,
-                                                    );
-                                                    Navigator.pop(context);
-                                                  }
-                                                },
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ) : provider.prediccionSeleccionado == 3
-                                  ? List.generate(
-                                      provider.prediccion3.length,
-                                      (index) => PetItem(
-                                        data: provider.prediccion3[index],
-                                        width: width,
-                                        onTap: () {},
-                                        onDeleteTap: () async {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialogSiNo(
-                                                mensaje:
-                                                    "¿Seguro desea eliminar esta mascota?",
-                                                onTap: () async {
-                                                  bool query = await API()
-                                                      .eliminar_mascota(provider
-                                                          .prediccion3[index]
-                                                          .idMascota!);
-                                                  if (query) {
-                                                    Fluttertoast.showToast(
-                                                      msg:
-                                                          "Mascota eliminada con exito",
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                      gravity: ToastGravity.TOP,
-                                                      backgroundColor:
-                                                          Colors.green,
-                                                      textColor: Colors.white,
-                                                      fontSize: 20,
-                                                    );
-                                                    provider.setMascotas();
-                                                    Navigator.pop(context);
-                                                  } else {
-                                                    Fluttertoast.showToast(
-                                                      msg:
-                                                          "Ocurrio un problema al eliminar a la mascota",
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                      gravity: ToastGravity.TOP,
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                      textColor: Colors.white,
-                                                      fontSize: 20,
-                                                    );
-                                                    Navigator.pop(context);
-                                                  }
-                                                },
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    )
-                                  : provider.prediccionSeleccionado == 4
-                                  ? List.generate(
-                                      provider.prediccion4.length,
-                                      (index) => PetItem(
-                                        data: provider.prediccion4[index],
-                                        width: width,
-                                        onTap: () {},
-                                        onDeleteTap: () async {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialogSiNo(
-                                                mensaje:
-                                                    "¿Seguro desea eliminar esta mascota?",
-                                                onTap: () async {
-                                                  bool query = await API()
-                                                      .eliminar_mascota(provider
-                                                          .prediccion4[index]
-                                                          .idMascota!);
-                                                  if (query) {
-                                                    Fluttertoast.showToast(
-                                                      msg:
-                                                          "Mascota eliminada con exito",
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                      gravity: ToastGravity.TOP,
-                                                      backgroundColor:
-                                                          Colors.green,
-                                                      textColor: Colors.white,
-                                                      fontSize: 20,
-                                                    );
-                                                    provider.setMascotas();
-                                                    Navigator.pop(context);
-                                                  } else {
-                                                    Fluttertoast.showToast(
-                                                      msg:
-                                                          "Ocurrio un problema al eliminar a la mascota",
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                      gravity: ToastGravity.TOP,
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                      textColor: Colors.white,
-                                                      fontSize: 20,
-                                                    );
-                                                    Navigator.pop(context);
-                                                  }
-                                                },
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ) : List.generate(
-                                      provider.mascotas.length,
-                                      (index) => PetItem(
-                                        data: provider.mascotas[index],
-                                        width: width,
-                                        onTap: () {},
-                                        onDeleteTap: () async {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialogSiNo(
-                                                mensaje:
-                                                    "¿Seguro desea eliminar esta mascota?",
-                                                onTap: () async {
-                                                  bool query = await API()
-                                                      .eliminar_mascota(provider
-                                                          .mascotas[index]
-                                                          .idMascota!);
-                                                  if (query) {
-                                                    Fluttertoast.showToast(
-                                                      msg:
-                                                          "Mascota eliminada con exito",
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                      gravity: ToastGravity.TOP,
-                                                      backgroundColor:
-                                                          Colors.green,
-                                                      textColor: Colors.white,
-                                                      fontSize: 20,
-                                                    );
-                                                    provider.setMascotas();
-                                                    Navigator.pop(context);
-                                                  } else {
-                                                    Fluttertoast.showToast(
-                                                      msg:
-                                                          "Ocurrio un problema al eliminar a la mascota",
-                                                      toastLength:
-                                                          Toast.LENGTH_SHORT,
-                                                      gravity: ToastGravity.TOP,
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                      textColor: Colors.white,
-                                                      fontSize: 20,
-                                                    );
-                                                    Navigator.pop(context);
-                                                  }
-                                                },
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    )
-                            ),
+                                                  },
+                                                ),
+                                              )
+                                            : provider.prediccionSeleccionado ==
+                                                    4
+                                                ? List.generate(
+                                                    provider.prediccion4.length,
+                                                    (index) => PetItem(
+                                                      data: provider
+                                                          .prediccion4[index],
+                                                      width: width,
+                                                      onTap: () {},
+                                                      onDeleteTap: () async {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return AlertDialogSiNo(
+                                                              mensaje:
+                                                                  "¿Seguro desea eliminar esta mascota?",
+                                                              onTap: () async {
+                                                                bool query = await API()
+                                                                    .eliminar_mascota(provider
+                                                                        .prediccion4[
+                                                                            index]
+                                                                        .idMascota!);
+                                                                if (query) {
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                    msg:
+                                                                        "Mascota eliminada con exito",
+                                                                    toastLength:
+                                                                        Toast
+                                                                            .LENGTH_SHORT,
+                                                                    gravity:
+                                                                        ToastGravity
+                                                                            .TOP,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .green,
+                                                                    textColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    fontSize:
+                                                                        20,
+                                                                  );
+                                                                  provider
+                                                                      .setMascotas();
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                } else {
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                    msg:
+                                                                        "Ocurrio un problema al eliminar a la mascota",
+                                                                    toastLength:
+                                                                        Toast
+                                                                            .LENGTH_SHORT,
+                                                                    gravity:
+                                                                        ToastGravity
+                                                                            .TOP,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .red,
+                                                                    textColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    fontSize:
+                                                                        20,
+                                                                  );
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                }
+                                                              },
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                    ),
+                                                  )
+                                                : List.generate(
+                                                    0,
+                                                    (index) => PetItem(
+                                                      data: provider
+                                                          .mascotas[index],
+                                                      width: width,
+                                                      onTap: () {},
+                                                      onDeleteTap: () async {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return AlertDialogSiNo(
+                                                              mensaje:
+                                                                  "¿Seguro desea eliminar esta mascota?",
+                                                              onTap: () async {
+                                                                bool query = await API()
+                                                                    .eliminar_mascota(provider
+                                                                        .mascotas[
+                                                                            index]
+                                                                        .idMascota!);
+                                                                if (query) {
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                    msg:
+                                                                        "Mascota eliminada con exito",
+                                                                    toastLength:
+                                                                        Toast
+                                                                            .LENGTH_SHORT,
+                                                                    gravity:
+                                                                        ToastGravity
+                                                                            .TOP,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .green,
+                                                                    textColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    fontSize:
+                                                                        20,
+                                                                  );
+                                                                  provider
+                                                                      .setMascotas();
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                } else {
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                    msg:
+                                                                        "Ocurrio un problema al eliminar a la mascota",
+                                                                    toastLength:
+                                                                        Toast
+                                                                            .LENGTH_SHORT,
+                                                                    gravity:
+                                                                        ToastGravity
+                                                                            .TOP,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .red,
+                                                                    textColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    fontSize:
+                                                                        20,
+                                                                  );
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                }
+                                                              },
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                    ),
+                                                  )),
                           ],
                         )
             ],

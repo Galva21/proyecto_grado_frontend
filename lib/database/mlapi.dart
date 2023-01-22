@@ -31,11 +31,11 @@ class MLapi {
           "desparacitado": desparacitado!,
           "esterilizado": esterilizado!
         }));
-    // print('Response status: ${response.statusCode}');
-    // print('Response body: ${response.body}');
-    int r = int.parse(response.body.split(':')[1][0].toString());
-    print("prediction: "+ r.toString());
-    return r;
+    print('Response status DEEP LEARNING: ${response.statusCode}');
+    print('Response body DEEP LEARNING: ${response.body}');
+    // int r = int.parse(response.body.split(':')[1][0].toString());
+    // print("prediction: "+ r.toString());
+    return 1;
   }
 
   // Future getMascotas(BuildContext context) async {

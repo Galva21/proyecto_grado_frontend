@@ -15,6 +15,7 @@ class Mascota {
   String? foto;
   String? fechaIngreso;
   String? fechaSalida;
+  String? pelaje;
   int? tiempoAdopcion;
 
   Mascota(
@@ -33,6 +34,7 @@ class Mascota {
       this.foto,
       this.fechaIngreso,
       this.fechaSalida,
+      this.pelaje,
       this.tiempoAdopcion,
       });
 

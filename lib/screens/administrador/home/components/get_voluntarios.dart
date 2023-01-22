@@ -63,7 +63,7 @@ class _GetVoluntariosState extends State<GetVoluntarios> {
                 children: [
                   CarouselSlider(
                     options: CarouselOptions(
-                      height: 400,
+                      height: 500,
                       enlargeCenterPage: true,
                       disableCenter: true,
                       viewportFraction: .8,

@@ -9,6 +9,7 @@ import 'package:pet_app/database/api.dart';
 import 'package:pet_app/model/mascota.dart';
 import 'package:pet_app/provider/user_provider.dart';
 import 'package:pet_app/screens/components/alert_dialog.dart';
+import 'package:pet_app/screens/voluntario/home/components/nueva_adopcion.dart';
 import 'package:pet_app/screens/voluntario/home/components/pet_item.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +69,7 @@ class _GetPetsState extends State<GetPets> {
                 children: [
                   CarouselSlider(
                     options: CarouselOptions(
-                      height: 400,
+                      height: 450,
                       enlargeCenterPage: true,
                       disableCenter: true,
                       viewportFraction: .8,
@@ -79,7 +80,21 @@ class _GetPetsState extends State<GetPets> {
                             (index) => PetItem(
                               data: provider.mascotas[index],
                               width: width,
-                              onTap: () {},
+                              onTap: () async {
+                                print(provider.mascotas[index].idMascota);
+                                print(provider.usuarioLogeado.id);
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: ((context) => NuevaAdopcion(
+                                          idMascota: provider
+                                              .mascotas[index].idMascota!,
+                                          idVoluntario:
+                                              provider.usuarioLogeado.id,
+                                        )),
+                                  ),
+                                );
+                              },
                               onDeleteTap: () async {
                                 showDialog(
                                   context: context,

@@ -31,10 +31,12 @@ class UsuarioItem extends StatelessWidget {
         margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(radius),
+          color: Colors.grey.shade300
         ),
         child: Stack(
           children: [
             Container(
+              margin: EdgeInsets.all(3),
               child: CustomImage(
                 data!.foto,
                 borderRadius: BorderRadius.vertical(
@@ -54,7 +56,7 @@ class UsuarioItem extends StatelessWidget {
                 opacity: 0.15,
                 child: Container(
                   width: width,
-                  height: 110,
+                  height: 200,
                   padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                   decoration: BoxDecoration(
                     color: Colors.transparent,
@@ -78,7 +80,7 @@ class UsuarioItem extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              data!.nombre,
+                              data!.nombre+" "+data!.apellidoPaterno+" "+data!.apellidoMaterno,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -124,20 +126,33 @@ class UsuarioItem extends StatelessWidget {
                       SizedBox(
                         height: 15,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      Column(
                         children: [
-                          getAttribute(
-                            Icons.transgender,
-                            data!.ci,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              getAttribute("CI: ", data!.ci),
+                              getAttribute("Telefono: ", data!.telefono),
+                            ],
                           ),
-                          getAttribute(
-                            Icons.color_lens_outlined,
-                            data!.telefono,
+                          SizedBox(
+                            height: 10,
                           ),
-                          getAttribute(
-                            Icons.calendar_month_outlined,
-                            data!.fechaNacimiento,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              getAttribute("Genero: ", data!.sexo),
+                              getAttribute("Email: ", data!.email),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              getAttribute("Pregunta: ", data!.preguntaRecuperacion),
+                            ],
                           ),
                         ],
                       ),
@@ -152,13 +167,10 @@ class UsuarioItem extends StatelessWidget {
     );
   }
 
-  getAttribute(IconData icon, String info) {
+  getAttribute(String campo, String info) {
     return Row(
       children: [
-        Icon(
-          icon,
-          size: 18,
-        ),
+        Text("º ${campo}"),
         SizedBox(
           width: 3,
         ),

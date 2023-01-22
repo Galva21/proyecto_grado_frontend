@@ -86,6 +86,15 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                   );
                 }
+              } else {
+                Fluttertoast.showToast(
+                  msg: "Usuario o contraseña incorrecta",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.TOP,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 20,
+                );
               }
             },
             child: Text(

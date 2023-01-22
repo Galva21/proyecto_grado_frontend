@@ -7,6 +7,7 @@ import 'package:pet_app/model/mascota.dart';
 class UserProvider with ChangeNotifier {
   int tipoSeleccionado = 0;
   int prediccionSeleccionado = 0;
+  String idMascotaAdopcion = "";
   Usuario usuarioLogeado = Usuario(
       id: "",
       ci: "",
