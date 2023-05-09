@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
             iconTheme: IconThemeData(color: labelColor),
             title: getAppBar(),
             centerTitle: true,
+            automaticallyImplyLeading: false,
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -106,11 +107,11 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 25,
+              height: 10,
             ),
             getCategories(),
             SizedBox(
-              height: 25,
+              height: 10,
             ),
             Row(
               children: [
@@ -148,7 +149,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             SizedBox(
-              height: 25,
+              height: 10,
             ),
             GetPets()
           ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pet_app/screens/voluntario/adoptantes/adoptantes.dart';
+import 'package:pet_app/screens/voluntario/adopciones/adopciones.dart';
 import 'package:pet_app/screens/voluntario/home/home.dart';
 import 'package:pet_app/screens/voluntario/perfil/perfil.dart';
 import 'package:pet_app/screens/voluntario/prediccion/prediccion_mascotas.dart';

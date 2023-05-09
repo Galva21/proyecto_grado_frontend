@@ -9,7 +9,7 @@ import 'package:pet_app/model/mascota.dart';
 class API {
   Future<Usuario> adminLogeado(String id) async {
     var url = Uri.parse(
-        "http://192.168.0.11/proyectogrado_api/administrador/administrador.php?id=${id}");
+        "http://192.168.0.5/proyectogrado_api/administrador/administrador.php?id=${id}");
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -35,7 +35,7 @@ class API {
 
   Future<Usuario> voluntarioLogeado(String id) async {
     var url = Uri.parse(
-        "http://192.168.0.11/proyectogrado_api/voluntario/voluntario.php?id=${id}");
+        "http://192.168.0.5/proyectogrado_api/voluntario/voluntario.php?id=${id}");
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -61,7 +61,7 @@ class API {
 
   Future<bool> eliminar_mascota(String id) async {
     var url = Uri.parse(
-        "http://192.168.0.11/proyectogrado_api/mascota/eliminar_mascota.php");
+        "http://192.168.0.5/proyectogrado_api/mascota/eliminar_mascota.php");
     var response = await http.post(url, body: {
       'id': '${id}',
     });
@@ -74,7 +74,7 @@ class API {
 
   Future<bool> eliminar_voluntario(String id) async {
     var url = Uri.parse(
-        "http://192.168.0.11/proyectogrado_api/voluntario/eliminar_voluntario.php");
+        "http://192.168.0.5/proyectogrado_api/voluntario/eliminar_voluntario.php");
     var response = await http.post(url, body: {
       'id': '${id}',
     });
@@ -87,7 +87,7 @@ class API {
 
   Future<bool> eliminar_adoptante(String id) async {
     // var url = Uri.parse(
-    //     "http://192.168.0.11/proyectogrado_api/adoptante/eliminar_adoptante.php");
+    //     "http://192.168.0.5/proyectogrado_api/adoptante/eliminar_adoptante.php");
     // var response = await http.post(url, body: {
     //   'id': '${id}',
     // });
@@ -102,7 +102,7 @@ class API {
   Future<List<Usuario>> voluntarios() async {
     List<Usuario> voluntarios = [];
     var url = Uri.parse(
-        "http://192.168.0.11/proyectogrado_api/voluntario/voluntarios.php");
+        "http://192.168.0.5/proyectogrado_api/voluntario/voluntarios.php");
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -131,7 +131,7 @@ class API {
   Future<List<Adoptante>> adoptantes() async {
     // List<Adoptante> adoptantes = [];
     // var url = Uri.parse(
-    //     "http://192.168.0.11/proyectogrado_api/adoptante/adoptantes.php");
+    //     "http://192.168.0.5/proyectogrado_api/adoptante/adoptantes.php");
     // var response = await http.get(url);
     // print('Response status: ${response.statusCode}');
     // print('Response body: ${response.body}');
@@ -157,7 +157,39 @@ class API {
   Future<List<Mascota>> mascotas() async {
     List<Mascota> mascotas = [];
     var url =
-        Uri.parse("http://192.168.0.11/proyectogrado_api/mascota/mascotas.php");
+        Uri.parse("http://192.168.0.5/proyectogrado_api/mascota/mascotas.php");
+    var response = await http.post(url, body: {});
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    final List<dynamic> data = json.decode(response.body);
+    for (var e in data) {
+      mascotas.add(Mascota(
+        idMascota: e['id_mascota'],
+        color: e['color'],
+        descripcion: e['descripcion'],
+        esterilizado: e['esterilizado'],
+        fechaIngreso: e['fecha_ingreso'],
+        fechaNacimiento: e['fecha_nacimiento'],
+        fechaSalida: e['fecha_salida'],
+        foto: e['foto'],
+        nombre: e['nombre'],
+        raza: e['raza'],
+        sexo: e['sexo'],
+        tipo: e['tipo'],
+        vacunado: e['vacunado'],
+        desparacitado: e['desparacitado'],
+        madurez: e['madurez'],
+        tiempoAdopcion: int.parse(e['tiempo_adopcion']),
+        pelaje: e['long_pelaje'],
+      ));
+    }
+    return mascotas;
+  }
+
+  Future<List<Mascota>> mascotasNoAdoptadas() async {
+    List<Mascota> mascotas = [];
+    var url =
+        Uri.parse("http://192.168.0.5/proyectogrado_api/mascota/mascotasNoAdoptadas.php");
     var response = await http.post(url, body: {});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -189,7 +221,7 @@ class API {
   Future<bool> restablecer_contrasenia(
       String usuario, String respuesta, String contrasenia) async {
     var url = Uri.parse(
-        "http://192.168.0.11/proyectogrado_api/login/restablecer.php");
+        "http://192.168.0.5/proyectogrado_api/login/restablecer.php");
     var response = await http.post(url, body: {
       'usuario': '${usuario}',
       'respuesta': '${respuesta}',
@@ -204,7 +236,7 @@ class API {
 
   Future<bool> existeUsuario(String usuario) async {
     var url = Uri.parse(
-        "http://192.168.0.11/proyectogrado_api/login/usuario_existe.php");
+        "http://192.168.0.5/proyectogrado_api/login/usuario_existe.php");
     var response = await http.post(url, body: {'usuario': '${usuario}'});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -215,7 +247,7 @@ class API {
 
   Future<String> preguntaUsuario(String usuario) async {
     var url = Uri.parse(
-        "http://192.168.0.11/proyectogrado_api/login/usuario_existe.php");
+        "http://192.168.0.5/proyectogrado_api/login/usuario_existe.php");
     var response = await http.post(url, body: {'usuario': '${usuario}'});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -226,7 +258,7 @@ class API {
 
   Future<bool> iniciarSesion(String usuario, String contra) async {
     var url =
-        Uri.parse("http://192.168.0.11/proyectogrado_api/login/login.php");
+        Uri.parse("http://192.168.0.5/proyectogrado_api/login/login.php");
     var response = await http
         .post(url, body: {'usuario': '${usuario}', 'contrasenia': '${contra}'});
     print('Response status: ${response.statusCode}');
@@ -252,7 +284,7 @@ class API {
     required int tiempoAdopcion,
   }) async {
     var url = Uri.parse(
-        "http://192.168.0.11/proyectogrado_api/mascota/nueva_mascota.php");
+        "http://192.168.0.5/proyectogrado_api/mascota/nueva_mascota.php");
     var response = await http.post(url, body: {
       'nombre': '${nombre}',
       'tipo': '${tipo}',
@@ -291,7 +323,7 @@ class API {
       String pregunta_recuperacion,
       String respuesta_recuperacion) async {
     var url = Uri.parse(
-        "http://192.168.0.11/proyectogrado_api/voluntario/nuevo_voluntario.php");
+        "http://192.168.0.5/proyectogrado_api/voluntario/nuevo_voluntario.php");
     var response = await http.post(url, body: {
       'ci': '${ci}',
       'nombre': '${nombre}',
@@ -327,7 +359,7 @@ class API {
     String foto,
   ) async {
     // var url = Uri.parse(
-    //     "http://192.168.0.11/proyectogrado_api/adoptante/nuevo_adoptante.php");
+    //     "http://192.168.0.5/proyectogrado_api/adoptante/nuevo_adoptante.php");
     // var response = await http.post(url, body: {
     //   'ci': '${ci}',
     //   'nombre': '${nombre}',

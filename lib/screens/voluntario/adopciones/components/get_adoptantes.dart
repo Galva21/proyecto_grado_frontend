@@ -6,8 +6,8 @@ import 'package:pet_app/database/api.dart';
 import 'package:pet_app/provider/user_provider.dart';
 import 'package:pet_app/screens/administrador/home/components/usuario_item.dart';
 import 'package:pet_app/screens/components/alert_dialog.dart';
-import 'package:pet_app/screens/voluntario/adoptantes/components/adoptante_item.dart';
-import 'package:pet_app/screens/voluntario/adoptantes/components/nueva_adopcion.dart';
+import 'package:pet_app/screens/voluntario/adopciones/components/adoptante_item.dart';
+import 'package:pet_app/screens/voluntario/adopciones/components/nueva_adopcion.dart';
 import 'package:provider/provider.dart';
 
 class GetAdoptantes extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/provider/user_provider.dart';
-import 'package:pet_app/screens/voluntario/adoptantes/components/get_pet_adopcion.dart';
+import 'package:pet_app/screens/voluntario/adopciones/components/get_pet_adopcion.dart';
 import 'package:provider/provider.dart';
 
 class NuevaAdopcion extends StatefulWidget {

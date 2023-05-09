@@ -48,7 +48,7 @@ class _GetPetsState extends State<GetPets> {
               ),
             ),
           )
-        : provider.mascotas.length == 0
+        : provider.mascotasNoAdoptadas.length == 0
             ? Center(
                 child: Container(
                   height: 500,
@@ -76,19 +76,21 @@ class _GetPetsState extends State<GetPets> {
                     ),
                     items: provider.tipoSeleccionado == 0
                         ? List.generate(
-                            provider.mascotas.length,
+                            provider.mascotasNoAdoptadas.length,
                             (index) => PetItem(
-                              data: provider.mascotas[index],
+                              data: provider.mascotasNoAdoptadas[index],
                               width: width,
                               onTap: () async {
-                                print(provider.mascotas[index].idMascota);
+                                print(provider
+                                    .mascotasNoAdoptadas[index].idMascota);
                                 print(provider.usuarioLogeado.id);
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: ((context) => NuevaAdopcion(
                                           idMascota: provider
-                                              .mascotas[index].idMascota!,
+                                              .mascotasNoAdoptadas[index]
+                                              .idMascota!,
                                           idVoluntario:
                                               provider.usuarioLogeado.id,
                                         )),
@@ -105,7 +107,8 @@ class _GetPetsState extends State<GetPets> {
                                       onTap: () async {
                                         bool query = await API()
                                             .eliminar_mascota(provider
-                                                .mascotas[index].idMascota!);
+                                                .mascotasNoAdoptadas[index]
+                                                .idMascota!);
                                         if (query) {
                                           Fluttertoast.showToast(
                                             msg: "Mascota eliminada con exito",
@@ -142,7 +145,21 @@ class _GetPetsState extends State<GetPets> {
                                 (index) => PetItem(
                                   data: provider.perros[index],
                                   width: width,
-                                  onTap: () {},
+                                  onTap: () async {
+                                    print(provider.perros[index].idMascota);
+                                    print(provider.usuarioLogeado.id);
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: ((context) => NuevaAdopcion(
+                                              idMascota: provider
+                                                  .perros[index].idMascota!,
+                                              idVoluntario:
+                                                  provider.usuarioLogeado.id,
+                                            )),
+                                      ),
+                                    );
+                                  },
                                   onDeleteTap: () async {
                                     bool query = await API().eliminar_mascota(
                                         provider.perros[index].idMascota!);
@@ -174,7 +191,21 @@ class _GetPetsState extends State<GetPets> {
                                 (index) => PetItem(
                                   data: provider.gatos[index],
                                   width: width,
-                                  onTap: () {},
+                                  onTap: () async {
+                                    print(provider.gatos[index].idMascota);
+                                    print(provider.usuarioLogeado.id);
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: ((context) => NuevaAdopcion(
+                                              idMascota: provider
+                                                  .gatos[index].idMascota!,
+                                              idVoluntario:
+                                                  provider.usuarioLogeado.id,
+                                            )),
+                                      ),
+                                    );
+                                  },
                                   onDeleteTap: () async {
                                     bool query = await API().eliminar_mascota(
                                         provider.gatos[index].idMascota!);

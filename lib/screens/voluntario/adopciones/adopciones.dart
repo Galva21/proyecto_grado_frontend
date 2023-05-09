@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/model/mascota.dart';
 import 'package:pet_app/provider/user_provider.dart';
-import 'package:pet_app/screens/voluntario/adoptantes/components/get_adoptantes.dart';
-import 'package:pet_app/screens/voluntario/adoptantes/components/nuevo_adoptante.dart';
+import 'package:pet_app/screens/voluntario/adopciones/components/get_adoptantes.dart';
+import 'package:pet_app/screens/voluntario/adopciones/components/nuevo_adoptante.dart';
 import 'package:pet_app/screens/voluntario/home/components/pet_item.dart';
 import 'package:pet_app/screens/voluntario/home/components/pet_item_aux.dart';
 import 'package:pet_app/utils/color.dart';

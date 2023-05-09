@@ -147,7 +147,7 @@ class _PrediccionMascotasState extends State<PrediccionMascotas> {
                           children: [
                             CarouselSlider(
                                 options: CarouselOptions(
-                                  height: 400,
+                                  height: 470,
                                   enlargeCenterPage: true,
                                   disableCenter: true,
                                   viewportFraction: .8,

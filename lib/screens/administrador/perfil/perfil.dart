@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_app/provider/user_provider.dart';
+import 'package:pet_app/screens/components/alert_dialog.dart';
 import 'package:pet_app/screens/splash_screen.dart';
 import 'package:pet_app/utils/color.dart';
 import 'package:provider/provider.dart';
@@ -188,12 +189,25 @@ class _PerfilAdministradorState extends State<PerfilAdministrador> {
                   height: 10,
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => SplashScreen()),
-                      ),
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialogSiNo(
+                          mensaje: "¿Seguro desea cerrar sesión?",
+                          icono: Icons.crisis_alert,
+                          titulo: "Cierre de sesión",
+                          color: Colors.red,
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: ((context) => SplashScreen()),
+                              ),
+                            );
+                          },
+                        );
+                      },
                     );
                   },
                   child: Text(

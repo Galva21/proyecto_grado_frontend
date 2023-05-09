@@ -24,6 +24,7 @@ class UserProvider with ChangeNotifier {
       preguntaRecuperacion: "",
       respuestaRecuperacion: "");
   List<Mascota> mascotas = [];
+  List<Mascota> mascotasNoAdoptadas = [];
   List<Usuario> voluntarios = [];
   List<Adoptante> adoptantes = [];
   List<Mascota> gatos = [];
@@ -49,7 +50,8 @@ class UserProvider with ChangeNotifier {
     gatos.clear();
     perros.clear();
     mascotas = await API().mascotas();
-    for (var e in mascotas) {
+    mascotasNoAdoptadas = await API().mascotasNoAdoptadas();
+    for (var e in mascotasNoAdoptadas) {
       e.tipo == "Gato" ? gatos.add(e) : perros.add(e);
       switch (e.tiempoAdopcion) {
         case 1:
