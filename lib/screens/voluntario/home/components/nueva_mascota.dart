@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pet_app/database/api.dart';
 import 'package:pet_app/database/mlapi.dart';
 import 'package:pet_app/screens/login/components/login_form.dart';
@@ -51,6 +54,8 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
   String _foto = "";
   String _fechaIngreso = "";
 
+  String imagePath = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,6 +79,62 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                   color: kBackgroundColor,
                   boxShadow: [
                     BoxShadow(color: kPrimaryColor, spreadRadius: 1),
+                  ],
+                ),
+              ),
+              Container(
+                height: 75,
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      child: Icon(Icons.create_new_folder_rounded, size: 30),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: kPrimaryColor,
+                          shape: CircleBorder(),
+                          elevation: 5,
+                          minimumSize: Size(50, 50)),
+                      onPressed: () async {
+                        try {
+                          final ImagePicker _picker = ImagePicker();
+                          XFile? _file_picker = await _picker.pickImage(
+                              source: ImageSource.gallery);
+                          imagePath = _file_picker!.path;
+                          print(_file_picker.path);
+                        } catch (e) {
+                          print(e.toString());
+                        }
+                        setState(() {});
+                      },
+                    ),
+                    ElevatedButton(
+                      child: Icon(Icons.camera_alt, size: 30),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: kPrimaryColor,
+                          shape: CircleBorder(),
+                          elevation: 5,
+                          minimumSize: Size(50, 50)),
+                      onPressed: () async {
+                        try {
+                          final ImagePicker _picker = ImagePicker();
+                          XFile? _file_picker = await _picker.pickImage(
+                              source: ImageSource.camera);
+                          imagePath = _file_picker!.path;
+                          print(_file_picker.path);
+                        } catch (e) {
+                          print(e.toString());
+                        }
+                        setState(() {});
+                      },
+                    ),
+                    imagePath == ""
+                        ? Container()
+                        : Container(
+                            child: Image.file(
+                              File(imagePath),
+                            ),
+                          )
                   ],
                 ),
               ),
@@ -214,37 +275,6 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                   ),
                 ],
               ),
-              // Row(
-              //   mainAxisSize: MainAxisSize.min,
-              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //   children: [
-              //     Container(
-              //       margin: EdgeInsets.symmetric(vertical: 10),
-              //       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              //       decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(29),
-              //       ),
-              //       child: Text("Raza"),
-              //     ),
-              //     Container(
-              //       margin: EdgeInsets.symmetric(vertical: 10),
-              //       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              //       decoration: BoxDecoration(
-              //         color: kPrimaryLightColor,
-              //         borderRadius: BorderRadius.circular(29),
-              //       ),
-              //       child: DropdownButton<String>(
-              //         value: _raza,
-              //         items: itemRaza.map(buildMenuItemTipos).toList(),
-              //         onChanged: (value) {
-              //           setState(() {
-              //             _raza = value!;
-              //           });
-              //         },
-              //       ),
-              //     ),
-              //   ],
-              // ),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -369,20 +399,6 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                   ),
                 ],
               ),
-              // TextFieldContainer(
-              //   child: TextField(
-              //     maxLength: 250,
-              //     onChanged: (value) {
-              //       _descripcion = value;
-              //     },
-              //     decoration: InputDecoration(
-              //       icon:
-              //           Icon(Icons.add_reaction_outlined, color: kPrimaryColor),
-              //       hintText: "Descripción",
-              //       border: InputBorder.none,
-              //     ),
-              //   ),
-              // ),
               TextFieldContainer(
                 child: TextField(
                   onTap: (() async {
@@ -462,7 +478,6 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  await MLapi().getPrediccion();
                   if (_nombre == "" ||
                       _tipo == "" ||
                       _vacunado == "" ||
@@ -585,7 +600,7 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                       tipo: tipoP,
                       vacunado: vacunadoP,
                     );
-                    //mlapi
+
                     bool query = await API().insertarMascota(
                       nombre: _nombre,
                       tipo: _tipo!,

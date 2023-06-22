@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pet_app/model/Usuario.dart';
-import 'package:pet_app/model/adoptante.dart';
+import 'package:pet_app/model/adopcion.dart';
 import 'package:pet_app/model/mascota.dart';
 
 class API {
   Future<Usuario> adminLogeado(String id) async {
     var url = Uri.parse(
-        "http://192.168.0.5/proyectogrado_api/administrador/administrador.php?id=${id}");
+        "http://192.168.0.20/proyectogrado_api/administrador/administrador.php?id=${id}");
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -35,7 +35,7 @@ class API {
 
   Future<Usuario> voluntarioLogeado(String id) async {
     var url = Uri.parse(
-        "http://192.168.0.5/proyectogrado_api/voluntario/voluntario.php?id=${id}");
+        "http://192.168.0.20/proyectogrado_api/voluntario/voluntario.php?id=${id}");
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -61,7 +61,7 @@ class API {
 
   Future<bool> eliminar_mascota(String id) async {
     var url = Uri.parse(
-        "http://192.168.0.5/proyectogrado_api/mascota/eliminar_mascota.php");
+        "http://192.168.0.20/proyectogrado_api/mascota/eliminar_mascota.php");
     var response = await http.post(url, body: {
       'id': '${id}',
     });
@@ -74,7 +74,7 @@ class API {
 
   Future<bool> eliminar_voluntario(String id) async {
     var url = Uri.parse(
-        "http://192.168.0.5/proyectogrado_api/voluntario/eliminar_voluntario.php");
+        "http://192.168.0.20/proyectogrado_api/voluntario/eliminar_voluntario.php");
     var response = await http.post(url, body: {
       'id': '${id}',
     });
@@ -85,24 +85,10 @@ class API {
     return data[0]['salida'];
   }
 
-  Future<bool> eliminar_adoptante(String id) async {
-    // var url = Uri.parse(
-    //     "http://192.168.0.5/proyectogrado_api/adoptante/eliminar_adoptante.php");
-    // var response = await http.post(url, body: {
-    //   'id': '${id}',
-    // });
-    // print('Response status: ${response.statusCode}');
-    // print('Response body: ${response.body}');
-    // dynamic data = json.decode(response.body);
-    // print('Response decode body: ' + data[0]['mensaje'].toString());
-    // return data[0]['salida'];
-    return true;
-  }
-
   Future<List<Usuario>> voluntarios() async {
     List<Usuario> voluntarios = [];
     var url = Uri.parse(
-        "http://192.168.0.5/proyectogrado_api/voluntario/voluntarios.php");
+        "http://192.168.0.20/proyectogrado_api/voluntario/voluntarios.php");
     var response = await http.get(url);
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -128,36 +114,82 @@ class API {
     return voluntarios;
   }
 
-  Future<List<Adoptante>> adoptantes() async {
-    // List<Adoptante> adoptantes = [];
-    // var url = Uri.parse(
-    //     "http://192.168.0.5/proyectogrado_api/adoptante/adoptantes.php");
-    // var response = await http.get(url);
-    // print('Response status: ${response.statusCode}');
-    // print('Response body: ${response.body}');
-    // final List<dynamic> data = json.decode(response.body);
-    // for (var e in data) {
-    //   adoptantes.add(Adoptante(
-    //     id: e['id_adoptante'],
-    //     apellidoMaterno: e['apellido_materno'],
-    //     apellidoPaterno: e['apellido_paterno'],
-    //     ci: e['ci'],
-    //     direccion: e['direccion'],
-    //     email: e['email'],
-    //     fechaNacimiento: e['fecha_nacimiento'],
-    //     nombre: e['nombre'],
-    //     sexo: e['sexo'],
-    //     telefono: e['telefono'],
-    //     foto: e['foto'],
-    //   ));
-    // }
-    return [];
+  Future<List<Adopcion>> adopcionesFiltradas(String campo) async {
+    List<Adopcion> adopciones = [];
+    var url = Uri.parse(
+        "http://192.168.0.20/proyectogrado_api/adopcion/adopcion.php?campo=${campo}");
+    var response = await http.get(url);
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    final List<dynamic> data = json.decode(response.body);
+    for (var e in data) {
+      adopciones.add(Adopcion(
+          ci_adopt: e['ci_adopt'],
+          color: e['color'],
+          desparacitado: e['desparacitado'],
+          direccion_adopt: e['direccion_adopt'],
+          esterilizado: e['esterilizado'],
+          fecha_adopcion: e['fecha_adopcion'],
+          fecha_ingreso: e['fecha_ingreso'],
+          fecha_nacimiento: e['fecha_nacimiento'],
+          fecha_salida: e['fecha_salida'],
+          foto: e['foto'],
+          id_adopcion: e['id_adopcion'],
+          id_mascota: e['id_mascota'],
+          id_voluntario: e['id_voluntario'],
+          long_pelaje: e['long_pelaje'],
+          madurez: e['madurez'],
+          nombre: e['nombre'],
+          nombre_adopt: e['nombre_adopt'],
+          sexo: e['sexo'],
+          telefono_adopt: e['telefono_adopt'],
+          tiempo_adopcion: e['tiempo_adopcion'],
+          tipo: e['tipo'],
+          vacunado: e['vacunado']));
+    }
+    return adopciones;
+  }
+
+  Future<List<Adopcion>> adopciones() async {
+    List<Adopcion> adopciones = [];
+    var url = Uri.parse(
+        "http://192.168.0.20/proyectogrado_api/adopcion/adopciones.php");
+    var response = await http.get(url);
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    final List<dynamic> data = json.decode(response.body);
+    for (var e in data) {
+      adopciones.add(Adopcion(
+          ci_adopt: e['ci_adopt'],
+          color: e['color'],
+          desparacitado: e['desparacitado'],
+          direccion_adopt: e['direccion_adopt'],
+          esterilizado: e['esterilizado'],
+          fecha_adopcion: e['fecha_adopcion'],
+          fecha_ingreso: e['fecha_ingreso'],
+          fecha_nacimiento: e['fecha_nacimiento'],
+          fecha_salida: e['fecha_salida'],
+          foto: e['foto'],
+          id_adopcion: e['id_adopcion'],
+          id_mascota: e['id_mascota'],
+          id_voluntario: e['id_voluntario'],
+          long_pelaje: e['long_pelaje'],
+          madurez: e['madurez'],
+          nombre: e['nombre'],
+          nombre_adopt: e['nombre_adopt'],
+          sexo: e['sexo'],
+          telefono_adopt: e['telefono_adopt'],
+          tiempo_adopcion: e['tiempo_adopcion'],
+          tipo: e['tipo'],
+          vacunado: e['vacunado']));
+    }
+    return adopciones;
   }
 
   Future<List<Mascota>> mascotas() async {
     List<Mascota> mascotas = [];
     var url =
-        Uri.parse("http://192.168.0.5/proyectogrado_api/mascota/mascotas.php");
+        Uri.parse("http://192.168.0.20/proyectogrado_api/mascota/mascotas.php");
     var response = await http.post(url, body: {});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -188,8 +220,8 @@ class API {
 
   Future<List<Mascota>> mascotasNoAdoptadas() async {
     List<Mascota> mascotas = [];
-    var url =
-        Uri.parse("http://192.168.0.5/proyectogrado_api/mascota/mascotasNoAdoptadas.php");
+    var url = Uri.parse(
+        "http://192.168.0.20/proyectogrado_api/mascota/mascotasNoAdoptadas.php");
     var response = await http.post(url, body: {});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -221,7 +253,7 @@ class API {
   Future<bool> restablecer_contrasenia(
       String usuario, String respuesta, String contrasenia) async {
     var url = Uri.parse(
-        "http://192.168.0.5/proyectogrado_api/login/restablecer.php");
+        "http://192.168.0.20/proyectogrado_api/login/restablecer.php");
     var response = await http.post(url, body: {
       'usuario': '${usuario}',
       'respuesta': '${respuesta}',
@@ -236,7 +268,7 @@ class API {
 
   Future<bool> existeUsuario(String usuario) async {
     var url = Uri.parse(
-        "http://192.168.0.5/proyectogrado_api/login/usuario_existe.php");
+        "http://192.168.0.20/proyectogrado_api/login/usuario_existe.php");
     var response = await http.post(url, body: {'usuario': '${usuario}'});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -247,7 +279,7 @@ class API {
 
   Future<String> preguntaUsuario(String usuario) async {
     var url = Uri.parse(
-        "http://192.168.0.5/proyectogrado_api/login/usuario_existe.php");
+        "http://192.168.0.20/proyectogrado_api/login/usuario_existe.php");
     var response = await http.post(url, body: {'usuario': '${usuario}'});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
@@ -258,7 +290,7 @@ class API {
 
   Future<bool> iniciarSesion(String usuario, String contra) async {
     var url =
-        Uri.parse("http://192.168.0.5/proyectogrado_api/login/login.php");
+        Uri.parse("http://192.168.0.20/proyectogrado_api/login/login.php");
     var response = await http
         .post(url, body: {'usuario': '${usuario}', 'contrasenia': '${contra}'});
     print('Response status: ${response.statusCode}');
@@ -284,7 +316,7 @@ class API {
     required int tiempoAdopcion,
   }) async {
     var url = Uri.parse(
-        "http://192.168.0.5/proyectogrado_api/mascota/nueva_mascota.php");
+        "http://192.168.0.20/proyectogrado_api/mascota/nueva_mascota.php");
     var response = await http.post(url, body: {
       'nombre': '${nombre}',
       'tipo': '${tipo}',
@@ -323,7 +355,7 @@ class API {
       String pregunta_recuperacion,
       String respuesta_recuperacion) async {
     var url = Uri.parse(
-        "http://192.168.0.5/proyectogrado_api/voluntario/nuevo_voluntario.php");
+        "http://192.168.0.20/proyectogrado_api/voluntario/nuevo_voluntario.php");
     var response = await http.post(url, body: {
       'ci': '${ci}',
       'nombre': '${nombre}',
@@ -346,41 +378,29 @@ class API {
     return data[0]['salida'];
   }
 
-  Future<bool> insertarAdoptante(
-    String ci,
-    String nombre,
-    String apellido_paterno,
-    String apellido_materno,
-    String telefono,
-    String email,
-    String sexo,
-    String direccion,
-    String fecha_nacimiento,
-    String foto,
-  ) async {
-    // var url = Uri.parse(
-    //     "http://192.168.0.5/proyectogrado_api/adoptante/nuevo_adoptante.php");
-    // var response = await http.post(url, body: {
-    //   'ci': '${ci}',
-    //   'nombre': '${nombre}',
-    //   'paterno': '${apellido_paterno}',
-    //   'materno': '${apellido_materno}',
-    //   'telefono': '${telefono}',
-    //   'email': '${email}',
-    //   'sexo': '${sexo}',
-    //   'direccion': '${direccion}',
-    //   'fecha_nacimiento': '${fecha_nacimiento}',
-    //   'foto': '${foto}',
-    //   'foto_factura': '',
-    //   'foto_carnet': '',
-    //   'foto_croquis': '',
-    //   'autoridad_hogar': '',
-    // });
-    // print('Response status: ${response.statusCode}');
-    // print('Response body: ${response.body}');
-    // dynamic data = json.decode(response.body);
-    // print('Response decode body: ' + data[0]['mensaje'].toString());
-    // return data[0]['salida'];
-    return true;
+  Future<bool> insertarAdopcion(
+      String id_voluntario,
+      String id_mascota,
+      String nombre_adopt,
+      String ci_adopt,
+      String telefono_adopt,
+      String direccion_adopt,
+      String fecha_adopcion) async {
+    var url = Uri.parse(
+        "http://192.168.0.20/proyectogrado_api/adopcion/nueva_adopcion.php");
+    var response = await http.post(url, body: {
+      'id_voluntario': '${id_voluntario}',
+      'id_mascota': '${id_mascota}',
+      'nombre_adopt': '${nombre_adopt}',
+      'ci_adopt': '${ci_adopt}',
+      'telefono_adopt': '${telefono_adopt}',
+      'direccion_adopt': '${direccion_adopt}',
+      'fecha_adopcion': '${fecha_adopcion}'
+    });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    dynamic data = json.decode(response.body);
+    print('Response decode body: ' + data[0]['mensaje'].toString());
+    return data[0]['salida'];
   }
 }

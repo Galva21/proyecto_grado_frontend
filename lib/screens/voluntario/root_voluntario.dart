@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pet_app/provider/user_provider.dart';
 import 'package:pet_app/screens/voluntario/adopciones/adopciones.dart';
 import 'package:pet_app/screens/voluntario/home/home.dart';
 import 'package:pet_app/screens/voluntario/perfil/perfil.dart';
 import 'package:pet_app/screens/voluntario/prediccion/prediccion_mascotas.dart';
 import 'package:pet_app/utils/color.dart';
 import 'package:pet_app/screens/components/bottombar_item.dart';
+import 'package:provider/provider.dart';
 
 class RootVoluntario extends StatefulWidget {
   const RootVoluntario({Key? key}) : super(key: key);
@@ -81,6 +83,10 @@ class _RootAppState extends State<RootVoluntario>
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<UserProvider>(context, listen: false);
+    provider.setMascotas();
+    provider.setAdopciones();
+    provider.setVoluntarios();
     return Scaffold(
       backgroundColor: appBgColor,
       body: getBarPage(),

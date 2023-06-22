@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:glassmorphism_ui/glassmorphism_ui.dart';
+import 'package:pet_app/model/adopcion.dart';
 import 'package:pet_app/model/mascota.dart';
 import 'package:pet_app/utils/color.dart';
 import 'package:time_machine/time_machine.dart';
-import 'custom_image.dart';
+import '../../home/components/custom_image.dart';
 
 class PetItemAux extends StatelessWidget {
   const PetItemAux(
       {Key? key,
       required this.data,
       this.width = 350,
-      this.height = 400,
+      this.height = 500,
       this.radius = 40,
       this.onTap,
       this.onDeleteTap})
       : super(key: key);
-  final Mascota data;
+  final Adopcion data;
   final double width;
   final double height;
   final double radius;
@@ -28,7 +29,7 @@ class PetItemAux extends StatelessWidget {
     int cantidadAnios = 0;
     LocalDateTime a = LocalDateTime.now();
     LocalDateTime b =
-        LocalDateTime.dateTime(DateTime.parse(data.fechaNacimiento!));
+        LocalDateTime.dateTime(DateTime.parse(data.fecha_nacimiento));
     Period diff = a.periodSince(b);
     cantidadMeses = diff.months;
     cantidadAnios = diff.years;
@@ -36,9 +37,6 @@ class PetItemAux extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: width,
-        height: 500,
-        margin: EdgeInsets.fromLTRB(30, 0, 0, 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(radius),
         ),
@@ -46,7 +44,7 @@ class PetItemAux extends StatelessWidget {
           children: [
             Container(
               child: CustomImage(
-                data.foto!,
+                data.foto,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(radius),
                   bottom: Radius.zero,
@@ -57,27 +55,23 @@ class PetItemAux extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: 20,
+              bottom: 5,
               child: GlassContainer(
                 borderRadius: BorderRadius.circular(25),
                 blur: 10,
-                opacity: 0.05,
+                opacity: 0.01,
                 child: Container(
                   width: width,
-                  height: 270,
+                  height: 300,
                   padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.2),
+                    color: Colors.black.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(25),
                     boxShadow: [
                       BoxShadow(
                         color: shadowColor.withOpacity(0.1),
                         spreadRadius: 1,
                         blurRadius: 1,
-                        // offset: Offset(
-                        //   0,
-                        //   2,
-                        // ), // changes position of shadow
                       ),
                     ],
                   ),
@@ -88,7 +82,7 @@ class PetItemAux extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              data.nombre!,
+                              data.nombre,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -102,35 +96,12 @@ class PetItemAux extends StatelessWidget {
                           Expanded(
                             child: GestureDetector(
                               onTap: onDeleteTap,
-                              child: Container(
-                                child: Icon(
-                                  Icons.delete,
-                                  color: Colors.white,
-                                  size: 25,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.red.shade400,
-                                ),
-                                padding: EdgeInsets.all(5),
-                              ),
+                              child: Container(),
                             ),
-                            flex: 2,
+                            flex: 1,
                           )
                         ],
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      // Text(
-                      //   data.descripcion!,
-                      //   maxLines: 1,
-                      //   overflow: TextOverflow.ellipsis,
-                      //   style: TextStyle(
-                      //     color: glassLabelColor,
-                      //     fontSize: 13,
-                      //   ),
-                      // ),
                       SizedBox(
                         height: 10,
                       ),
@@ -139,11 +110,11 @@ class PetItemAux extends StatelessWidget {
                         children: [
                           getAttribute(
                             Icons.transgender,
-                            data.sexo!,
+                            data.sexo,
                           ),
                           getAttribute(
                             Icons.color_lens_outlined,
-                            data.color!,
+                            data.color,
                           ),
                           getAttribute(
                             Icons.calendar_month_outlined,
@@ -184,19 +155,24 @@ class PetItemAux extends StatelessWidget {
                         children: [
                           getAttributeText(
                             "Madurez",
-                            data.madurez!,
+                            data.madurez,
                           ),
                           getAttributeText(
                             "Pelaje",
-                            data.pelaje!,
+                            data.long_pelaje,
                           ),
                         ],
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 15,
                       ),
-                      Text(
-                        "----------------------------------------------------------------------------------",
+                      Center(
+                        child: Text(
+                          "DATOS DEL ADOPTANTE",
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       SizedBox(
                         height: 10,
@@ -206,11 +182,28 @@ class PetItemAux extends StatelessWidget {
                         children: [
                           getAttributeText(
                             "CI",
-                            "16398422",
+                            data.ci_adopt,
                           ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          getAttributeText("Nombre", data.nombre_adopt),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
                           getAttributeText(
-                            "Nombre",
-                            "Carlos Torres",
+                            "Fecha adopción",
+                            data.fecha_adopcion,
                           ),
                         ],
                       ),
@@ -222,11 +215,7 @@ class PetItemAux extends StatelessWidget {
                         children: [
                           getAttributeText(
                             "Telefono",
-                            "7365698",
-                          ),
-                          getAttributeText(
-                            "Fecha",
-                            "2022-12-05",
+                            data.telefono_adopt,
                           ),
                         ],
                       ),
@@ -238,7 +227,7 @@ class PetItemAux extends StatelessWidget {
                         children: [
                           getAttributeText(
                             "Dirección",
-                            "Calle los angeles #123 Villa Armonia",
+                            data.direccion_adopt,
                           ),
                         ],
                       ),

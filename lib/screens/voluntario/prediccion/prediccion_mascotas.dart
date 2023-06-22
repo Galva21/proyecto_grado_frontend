@@ -46,6 +46,7 @@ class _PrediccionMascotasState extends State<PrediccionMascotas> {
     double width = MediaQuery.of(context).size.width * .8;
     final provider = Provider.of<UserProvider>(context, listen: false);
     provider.setMascotas();
+    provider.setAdopciones();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

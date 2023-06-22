@@ -88,14 +88,15 @@ class _GetPetsState extends State<GetPets> {
                                   context,
                                   MaterialPageRoute(
                                     builder: ((context) => NuevaAdopcion(
-                                          idMascota: provider
-                                              .mascotasNoAdoptadas[index]
-                                              .idMascota!,
-                                          idVoluntario:
-                                              provider.usuarioLogeado.id,
+                                          mascotaAdop: provider
+                                              .mascotasNoAdoptadas[index],
+                                          voluntarioAdop:
+                                              provider.usuarioLogeado,
                                         )),
                                   ),
-                                );
+                                ).then((value) {});
+                                provider.setMascotas();
+                                provider.setAdopciones();
                               },
                               onDeleteTap: () async {
                                 showDialog(
@@ -152,13 +153,15 @@ class _GetPetsState extends State<GetPets> {
                                       context,
                                       MaterialPageRoute(
                                         builder: ((context) => NuevaAdopcion(
-                                              idMascota: provider
-                                                  .perros[index].idMascota!,
-                                              idVoluntario:
-                                                  provider.usuarioLogeado.id,
+                                              mascotaAdop:
+                                                  provider.perros[index],
+                                              voluntarioAdop:
+                                                  provider.usuarioLogeado,
                                             )),
                                       ),
-                                    );
+                                    ).then((value) {
+                                      provider.setMascotas();
+                                    });
                                   },
                                   onDeleteTap: () async {
                                     bool query = await API().eliminar_mascota(
@@ -198,13 +201,16 @@ class _GetPetsState extends State<GetPets> {
                                       context,
                                       MaterialPageRoute(
                                         builder: ((context) => NuevaAdopcion(
-                                              idMascota: provider
-                                                  .gatos[index].idMascota!,
-                                              idVoluntario:
-                                                  provider.usuarioLogeado.id,
+                                              mascotaAdop:
+                                                  provider.gatos[index],
+                                              voluntarioAdop:
+                                                  provider.usuarioLogeado,
                                             )),
                                       ),
-                                    );
+                                    ).then((value) {
+                                      provider.setMascotas();
+                                    });
+                                    ;
                                   },
                                   onDeleteTap: () async {
                                     bool query = await API().eliminar_mascota(

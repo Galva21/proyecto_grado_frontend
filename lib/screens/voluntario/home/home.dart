@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final provider = Provider.of<UserProvider>(context, listen: false);
     provider.setMascotas();
+    provider.setAdopciones();
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -136,6 +137,7 @@ class _HomePageState extends State<HomePage> {
                       final provider =
                           Provider.of<UserProvider>(context, listen: false);
                       provider.setMascotas();
+                      provider.setAdopciones();
                     });
                   },
                   child: Text(
