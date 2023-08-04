@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pet_app/database/api.dart';
 import 'package:pet_app/database/mlapi.dart';
 import 'package:pet_app/screens/login/components/login_form.dart';
+import 'package:pet_app/services/upload_file.dart';
 import 'package:pet_app/utils/color.dart';
 import 'package:time_machine/time_machine.dart';
 
@@ -55,6 +56,7 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
   String _fechaIngreso = "";
 
   String imagePath = "";
+  XFile? _file_picker;
 
   @override
   Widget build(BuildContext context) {
@@ -98,10 +100,10 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                       onPressed: () async {
                         try {
                           final ImagePicker _picker = ImagePicker();
-                          XFile? _file_picker = await _picker.pickImage(
+                          _file_picker = await _picker.pickImage(
                               source: ImageSource.gallery);
                           imagePath = _file_picker!.path;
-                          print(_file_picker.path);
+                          print(_file_picker!.path);
                         } catch (e) {
                           print(e.toString());
                         }
@@ -118,10 +120,10 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                       onPressed: () async {
                         try {
                           final ImagePicker _picker = ImagePicker();
-                          XFile? _file_picker = await _picker.pickImage(
+                          _file_picker = await _picker.pickImage(
                               source: ImageSource.camera);
                           imagePath = _file_picker!.path;
-                          print(_file_picker.path);
+                          print(_file_picker!.path);
                         } catch (e) {
                           print(e.toString());
                         }
@@ -616,6 +618,31 @@ class _NuevaMascotaPageState extends State<NuevaMascotaPage> {
                       fechaIngreso: _fechaIngreso,
                       tiempoAdopcion: tiempoAdopcion,
                     );
+
+                    try {
+                      final uploaded = await uploadFile(_file_picker!);
+                      if (!uploaded) {
+                        Fluttertoast.showToast(
+                        msg: "Error al subir la imagen",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.TOP,
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        fontSize: 20,
+                      );
+                      }
+                    } catch (e) {
+                      print(e);
+                      Fluttertoast.showToast(
+                        msg: "Debe seleccionar una imagen",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.TOP,
+                        backgroundColor: Colors.orange,
+                        textColor: Colors.white,
+                        fontSize: 20,
+                      );
+                    }
+
                     if (query) {
                       Fluttertoast.showToast(
                         msg: "Mascota registrada con exito",
